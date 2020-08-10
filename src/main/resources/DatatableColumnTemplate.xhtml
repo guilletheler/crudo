@@ -1,0 +1,7 @@
+<p:column headerText="[$[UPPER_FIELD_NAME]$]"
+	sortBy="#{item.[$[LOWER_FIELD_NAME]$]}"
+	filterBy="#{item.[$[LOWER_FIELD_NAME]$]}" filterMatchMode="contains">
+	<p:outputLabel value="#{item.[$[LOWER_FIELD_NAME]$]}">
+		[$[F:CONVERTER]$]
+	</p:outputLabel>
+</p:column>

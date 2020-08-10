@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="metadata">
+		<ui:param name="title" value="Lista de [$[CLASS_NAME]$]s" />
+		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="description">
+        Personas intervinientes en el sistema.
+    </ui:define>
+
+	<ui:define name="body">
+		<h:form>
+
+			<p:panel styleClass="card box-solid box-primary"
+				class="box box-solid box-primary" header="LISTADO DE USUARIOS">
+
+				<p:dataTable id="datatable"
+					value="#{[$[CONTROLLER_LIST_VAR_NAME]$].lazyDataModel}"
+					widgetVar="[$[VAR_NAME]$]Table" var="item"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exportar}"
+					currentPageReportTemplate="{totalRecords} [ {currentPage} / {totalPages} ]"
+					emptyMessage="No se encontraron elementos" paginator="true"
+					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true"
+					style="width:100%">
+
+					<p:ajax event="rowSelect" update="createButton" />
+					<p:ajax event="rowUnselect" update="createButton" />
+
+					<f:facet name="{Exportar}">
+						<p:outputLabel value="   EXPORTAR: " />
+						<h:commandLink styleClass="tableColumnHeader"
+							title="Exportar a XLS">
+							<i class="fa fa-fw fa-file-excel-o" />
+							<p:dataExporter type="xls" target="datatable" fileName="Lista" />
+						</h:commandLink>
+					</f:facet>
+
+					<f:facet name="header">
+						<div align="left">
+							<div class="row">
+								<div class="col-sm-12 col-md-3">
+									<p:commandButton
+										action="Edit[$[CLASS_NAME]$]?faces-redirect=true"
+										icon="fa fa-plus" iconPos="right"
+										styleClass="btn-primary btn-block" id="createButton"
+										value="NUEVO [$[UPPER_NAME]$]" />
+								</div>
+							</div>
+						</div>
+					</f:facet>
+					
+					[$[DATATABLE_COLUMNS]$]
+
+				</p:dataTable>
+			</p:panel>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-solid box-danger">
+				<p:commandButton value="Si" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
