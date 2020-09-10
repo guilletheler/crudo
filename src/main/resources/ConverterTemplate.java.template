@@ -1,0 +1,33 @@
+/**
+ * Generado con CRUDO
+ * [$[FILENAME]$]
+ */
+package [$[BASE_PACKAGE]$].infra.converter[$[SUB_PACKAGE]$];
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+import javax.persistence.EntityManager;
+
+import [$[BASE_PACKAGE]$].bean.EntityManagerHelperMB;
+import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
+
+@FacesConverter(forClass = [$[CLASS_NAME]$].class)
+public class [$[CLASS_NAME]$]Converter  implements Converter<[$[CLASS_NAME]$]> {
+
+	@Override
+	public [$[CLASS_NAME]$] getAsObject(FacesContext context, UIComponent component, String value) {
+		EntityManagerHelperMB rhb= context.getApplication().evaluateExpressionGet(context, "#{entityManagerHelperMB}", EntityManagerHelperMB.class);
+	    EntityManager em = rhb.getEm();
+	    [$[CLASS_NAME]$] tmp = em.find([$[CLASS_NAME]$].class, Integer.valueOf(value));
+	    return tmp;
+	}
+
+	@Override
+	public String getAsString(FacesContext context, UIComponent component, [$[CLASS_NAME]$] value) {
+		return value.getId().toString();
+	}
+
+	
+}

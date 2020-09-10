@@ -1,0 +1,9 @@
+<div class="ui-g-12 ui-md-6">
+	<div class="ui-sm-12 ui-g-12">
+		<p:outputLabel for="[$[FIELD_VAR_NAME]$]" value="[$[UPPER_FIELD_NAME]$]" />
+	</div>
+	<div class="ui-sm-12 ui-g-12">
+		<p:inputText id="[$[FIELD_VAR_NAME]$]" value="#{[$[EDIT_CONTROLLER_VAR_NAME]$].[$[VAR_NAME]$].[$[FIELD_VAR_NAME]$]}" />
+		<p:tooltip for="[$[FIELD_VAR_NAME]$]" value="Valor de [$[FIELD_VAR_NAME]$]" position="top" />
+	</div>
+</div>

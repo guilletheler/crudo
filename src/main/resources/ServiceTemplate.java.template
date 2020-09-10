@@ -1,0 +1,29 @@
+/**
+ * Generado con CRUDO
+ * [$[FILENAME]$]
+ */
+package [$[BASE_PACKAGE]$].service[$[SUB_PACKAGE]$];
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import [$[BASE_PACKAGE]$].infra.model.LazyDMFiller;
+import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
+import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
+import [$[BASE_PACKAGE]$].service.QueryHelper;
+
+@Service
+public class [$[SERVICE_CLASS_NAME]$] implements LazyDMFiller<[$[CLASS_NAME]$]> {
+
+	@Autowired
+	[$[REPO_CLASS_NAME]$] [$[REPO_VAR_NAME]$];
+
+	public Page<[$[CLASS_NAME]$]> findByFilter(Map<String, String> filters, Pageable pageable) {
+		return [$[REPO_VAR_NAME]$].findAll(QueryHelper.getFilterSpecification(filters), pageable);
+	}
+
+}

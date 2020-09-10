@@ -1,0 +1,10 @@
+<div class="ui-g-12 ui-md-12">
+	<div class="ui-sm-12 ui-g-12">
+		<p:outputLabel for="observaciones" value="OBSERVACIONES" />
+	</div>
+	<div class="ui-sm-12 ui-g-12">
+		<p:inputTextarea id="observaciones" rows="3" cols="20"
+			value="#{[$[EDIT_CONTROLLER_VAR_NAME]$].[$[VAR_NAME]$].[$[FIELD_VAR_NAME]$]}"
+			autoResize="true" />
+	</div>
+</div>

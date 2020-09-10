@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="title">
+        Edición de [$[CLASS_NAME]$]
+    </ui:define>
+
+	<ui:define name="body">
+		<f:metadata>
+			<f:viewParam name="id" value="#{[$[EDIT_CONTROLLER_VAR_NAME]$].id}"
+				converter="javax.faces.Long" />
+			<!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{[$[EDIT_CONTROLLER_VAR_NAME]$].init()}"/>-->
+			<f:event type="preRenderView"
+				listener="#{[$[EDIT_CONTROLLER_VAR_NAME]$].init}" />
+		</f:metadata>
+
+		<adm:breadcrumb
+			title="#{([$[EDIT_CONTROLLER_VAR_NAME]$].id == null) ? 'Nuevo [$[CLASS_NAME]$]' : '[$[CLASS_NAME]$] '.concat([$[EDIT_CONTROLLER_VAR_NAME]$].id)}"
+			link="Edit[$[CLASS_NAME]$].xhtml?id=#{[$[EDIT_CONTROLLER_VAR_NAME]$].id}" />
+		<h:form id="form" prependId="false">
+			<p:focus rendered="#{[$[EDIT_CONTROLLER_VAR_NAME]$].id == null}" />
+
+			<p:panel class="box box-solid box-primary"
+				header="CREANDO/EDITANDO UN [$[UPPER_NAME]$]"
+				style="width: 100%; height: 100%">
+
+				<div class="ui-g ui-fluid">
+				
+				[$[EDIT_FIELDS]$]
+				
+				</div>
+
+				<p:commandButton action="#{[$[EDIT_CONTROLLER_VAR_NAME]$].save}"
+					value="Guardar" update="@form" styleClass="btn btn-success" />
+				<p:commandButton value="Volver"
+					action="[$[LIST_PAGE_NAME]$]?faces-redirect=true"
+					styleClass="btn btn-danger" process="@this" immediate="true" />
+
+			</p:panel>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-danger box-solid">
+				<p:commandButton value="Si" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

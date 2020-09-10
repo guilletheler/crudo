@@ -1,0 +1,4 @@
+@Query("SELECT COALESCE(MAX(entity.codigo), 0) + 1 FROM [$[CLASS_NAME]$] entity")
+Integer nextCodigo();
+	
+Optional<[$[CLASS_NAME]$]> findByCodigo(Integer codigo);

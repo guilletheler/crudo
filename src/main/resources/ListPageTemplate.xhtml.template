@@ -9,7 +9,7 @@
 	template="#{layoutMB.template}">
 
 	<ui:define name="metadata">
-		<ui:param name="title" value="Lista de [$[CLASS_NAME]$]s" />
+		<ui:param name="title" value="Lista de [$[PLURAL_CLASS_NAME]$]" />
 		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
 		<style type="text/css">
 .ui-datatable .ui-datatable-header {
@@ -26,10 +26,11 @@
 		<h:form>
 
 			<p:panel styleClass="card box-solid box-primary"
-				class="box box-solid box-primary" header="LISTADO DE USUARIOS">
+				class="box box-solid box-primary"
+				header="LISTA DE [$[PLURAL_UPPER_NAME]$]">
 
 				<p:dataTable id="datatable"
-					value="#{[$[CONTROLLER_LIST_VAR_NAME]$].lazyDataModel}"
+					value="#{[$[LIST_CONTROLLER_VAR_NAME]$].lazyDataModel}"
 					widgetVar="[$[VAR_NAME]$]Table" var="item"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exportar}"
 					currentPageReportTemplate="{totalRecords} [ {currentPage} / {totalPages} ]"
@@ -54,7 +55,7 @@
 							<div class="row">
 								<div class="col-sm-12 col-md-3">
 									<p:commandButton
-										action="Edit[$[CLASS_NAME]$]?faces-redirect=true"
+										action="[$[EDIT_PAGE_NAME]$]?faces-redirect=true"
 										icon="fa fa-plus" iconPos="right"
 										styleClass="btn-primary btn-block" id="createButton"
 										value="NUEVO [$[UPPER_NAME]$]" />
@@ -62,6 +63,21 @@
 							</div>
 						</div>
 					</f:facet>
+
+					<p:column headerText="Acción" exportable="false" width="5%">
+						<p:button title="Editar" class="btn btn-success btn-xs"
+							icon="fa fa-fw fa fa-edit" outcome="[$[EDIT_PAGE_NAME]$].xhtml">
+							<f:param name="id" value="#{item.id}" />
+						</p:button>
+						<p:commandButton
+							actionListener="#{[$[LIST_CONTROLLER_VAR_NAME]$].borrar[$[CLASS_NAME]$](item)}"
+							update="datatable" class="btn btn-danger btn-xs"
+							icon="fa fa-fw fa fa-trash-o" title="Eliminar">
+							<p:confirm header="Eliminar [$[CLASS_NAME]$]"
+								message="¿Está seguro de eliminar la entidad?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+					</p:column>
 					
 					[$[DATATABLE_COLUMNS]$]
 

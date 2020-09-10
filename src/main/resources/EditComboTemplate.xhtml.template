@@ -1,0 +1,18 @@
+<div class="ui-g-12 ui-md-6">
+	<div class="ui-sm-12 ui-g-12">
+		<p:outputLabel for="[$[FIELD_VAR_NAME]$]"
+			value="[$[UPPER_FIELD_NAME]$]" />
+	</div>
+	<div class="ui-sm-12 ui-g-12">
+		<p:selectOneMenu id="[$[FIELD_VAR_NAME]$]"
+			value="#{[$[EDIT_CONTROLLER_VAR_NAME]$].[$[VAR_NAME]$].[$[FIELD_VAR_NAME]$]}"
+			style="width:100%" filter="true" filterMatchMode="contains"
+			converter="entityConverter" styleClass="selectOneMenu">
+			<f:selectItem itemLabel="Seleccione una opcion" itemValue="#{null}" />
+			<f:selectItems value="#{[$[REF_LIST]$]}" var="item"
+				itemLabel="#{item.[$[REF_VAR]$]}" itemValue="#{item}" />
+		</p:selectOneMenu>
+		<p:tooltip for="[$[FIELD_VAR_NAME]$]"
+			value="Valor de [$[FIELD_VAR_NAME]$]" position="top" />
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<!-- MENU -->
+<sec:authorize access="hasRole('[$[ROLE_REQUIRED]$]')">
+	<li class="treeview"><a href="#"><i class="fa fa-database"></i>
+			<span>[$[MENU_NAME]$]</span> <i class="fa fa-angle-left pull-right"></i>
+	</a>
+		<ul class="treeview-menu">
+			<li><p:link outcome="[$[PAGE_LIST_PATH]$]">
+					<i class="fa fa-codepen"></i>
+					<span>[$[OPTION_MENU_NAME]$]</span>
+				</p:link></li>
+		</ul></li>
+</sec:authorize>
+<!-- FIN MENU -->
+
+<!-- MENUBAR-->
+<sec:authorize access="hasAnyRole('[$[ROLE_REQUIRED]$]')">
+	<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">[$[MENU_NAME]$] <span class="caret"></span> <i
+			class="fa fa-gears"></i>
+	</a>
+		<ul class="dropdown-menu" role="menu">
+			<li><p:link outcome="[$[PAGE_LIST_PATH]$]">
+					<i class="fa fa-users"></i>
+					<span>[$[OPTION_MENU_NAME]$]</span>
+				</p:link></li>
+		</ul></li>
+</sec:authorize>
+<!-- FIN MENUBAR-->
