@@ -19,7 +19,7 @@
 	</ui:define>
 
 	<ui:define name="description">
-        Personas intervinientes en el sistema.
+        [$[PLURAL_CLASS_NAME]$] del sistema.
     </ui:define>
 
 	<ui:define name="body">

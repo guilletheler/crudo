@@ -24,7 +24,7 @@
 
 		<adm:breadcrumb
 			title="#{([$[EDIT_CONTROLLER_VAR_NAME]$].id == null) ? 'Nuevo [$[CLASS_NAME]$]' : '[$[CLASS_NAME]$] '.concat([$[EDIT_CONTROLLER_VAR_NAME]$].id)}"
-			link="Edit[$[CLASS_NAME]$].xhtml?id=#{[$[EDIT_CONTROLLER_VAR_NAME]$].id}" />
+			link="[$[CLASS_NAME]$]Edit.xhtml?id=#{[$[EDIT_CONTROLLER_VAR_NAME]$].id}" />
 		<h:form id="form" prependId="false">
 			<p:focus rendered="#{[$[EDIT_CONTROLLER_VAR_NAME]$].id == null}" />
 
