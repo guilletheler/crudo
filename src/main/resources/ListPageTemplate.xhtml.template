@@ -35,18 +35,17 @@
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exportar}"
 					currentPageReportTemplate="{totalRecords} [ {currentPage} / {totalPages} ]"
 					emptyMessage="No se encontraron elementos" paginator="true"
-					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true"
+					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true" multiViewState="true" 
+					tableStyle="width: auto; white-space: nowrap; font-size: smaller"
+					multiViewState="true"
 					style="width:100%">
-
-					<p:ajax event="rowSelect" update="createButton" />
-					<p:ajax event="rowUnselect" update="createButton" />
 
 					<f:facet name="{Exportar}">
 						<p:outputLabel value="   EXPORTAR: " />
 						<h:commandLink styleClass="tableColumnHeader"
 							title="Exportar a XLS">
 							<i class="fa fa-fw fa-file-excel-o" />
-							<p:dataExporter type="xls" target="datatable" fileName="Lista" />
+							<p:dataExporter type="xls" postProcessor="#{tableExporterUtilsMB.acomodaXls}" target="datatable" fileName="Lista[$[PLURAL_CLASS_NAME]$]" />
 						</h:commandLink>
 					</f:facet>
 

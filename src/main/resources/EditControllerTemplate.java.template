@@ -60,7 +60,7 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	}
 
 	public String save() {
-		String msg = "[$[CLASS_NAME]$] " + [$[VAR_NAME]$].[$[ID_METHOD]$];
+		String msg = "[$[CLASS_NAME]$] " + ([$[VAR_NAME]$].[$[ID_METHOD]$]);
 
 		[$[REPO_VAR_NAME]$].save([$[VAR_NAME]$]);
 
