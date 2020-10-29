@@ -377,7 +377,7 @@ public class CrudCreator {
                 converter = "><f:convertNumber pattern=\"#0.00\" /></p:outputLabel";
                 break;
             case "Date":
-                converter = "><f:convertDateTime type=\"date\" pattern=\"dd/MM/yyyy\"/></p:outputLabel";
+                converter = "><f:convertDateTime timeZone=\"America/Buenos_Aires\" type=\"date\" pattern=\"dd/MM/yyyy\"/></p:outputLabel";
                 break;
         }
 
