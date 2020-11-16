@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 import org.primefaces.model.LazyDataModel;
 
-import [$[BASE_PACKAGE]$].infra.model.GenericLazyDataModel;
+import [$[BASE_PACKAGE]$].infra.model.EntityLazyDataModel;
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].service[$[SUB_PACKAGE]$].[$[SERVICE_CLASS_NAME]$];
@@ -42,7 +42,7 @@ public class [$[LIST_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	
 	@PostConstruct
 	private void init() {
-		lazyDataModel = new GenericLazyDataModel<>([$[SERVICE_VAR_NAME]$]);
+		lazyDataModel = new EntityLazyDataModel<>([$[SERVICE_VAR_NAME]$]);
 	}
 
 	public void borrar[$[CLASS_NAME]$]([$[CLASS_NAME]$] [$[VAR_NAME]$]) {
