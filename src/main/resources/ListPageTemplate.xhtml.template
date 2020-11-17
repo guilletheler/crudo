@@ -34,7 +34,7 @@
 					widgetVar="[$[VAR_NAME]$]Table" var="item"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exportar}"
 					currentPageReportTemplate="{totalRecords} [ {currentPage} / {totalPages} ]"
-					emptyMessage="No se encontraron elementos" paginator="true"
+					emptyMessage="No se encontraron elementos" paginator="true" sortMode="multiple"
 					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true" multiViewState="true" 
 					tableStyle="width: auto; white-space: nowrap; font-size: smaller"
 					style="width:100%">
