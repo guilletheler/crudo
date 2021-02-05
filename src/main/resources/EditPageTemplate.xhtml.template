@@ -42,7 +42,7 @@
 					value="Guardar" update="@form" styleClass="btn btn-success" />
 				<p:commandButton value="Volver"
 					action="[$[LIST_PAGE_NAME]$]?faces-redirect=true"
-					styleClass="btn btn-danger" process="@this" immediate="true" />
+					styleClass="btn btn-primary" process="@this" immediate="true" />
 
 			</p:panel>
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"

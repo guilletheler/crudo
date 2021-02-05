@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -405,7 +406,7 @@ public class CrudCreator {
                 }
 
                 // el
-                if (m.getName().equals("getObservaciones")) {
+                if (Objects.equals(m.getName(), "getObservaciones")) {
                     return true;
                 }
 
@@ -439,7 +440,7 @@ public class CrudCreator {
             return null;
         }
 
-        if (m.getName().equals("getId")) {
+        if (Objects.equals(m.getName(), "getId")) {
             return null;
         }
 
@@ -512,7 +513,7 @@ public class CrudCreator {
             case "Double":
                 return buildEdit("EditNumberTemplate.xhtml", fieldName, Double.class);
             case "String":
-                if (fieldName.equals("observaciones")) {
+                if (Objects.equals(fieldName, "observaciones")) {
                     return buildEdit("EditObservacionesTemplate.xhtml", "observaciones", String.class);
                 }
                 return buildEdit("EditTextFieldTemplate.xhtml", fieldName, String.class);
