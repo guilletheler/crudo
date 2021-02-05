@@ -35,6 +35,7 @@
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exportar}"
 					currentPageReportTemplate="{totalRecords} [ {currentPage} / {totalPages} ]"
 					emptyMessage="No se encontraron elementos" paginator="true"
+					multiViewState="true" sortMode="multiple"
 					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true"
 					style="width:100%">
 
@@ -46,7 +47,7 @@
 						<h:commandLink styleClass="tableColumnHeader"
 							title="Exportar a XLS">
 							<i class="fa fa-fw fa-file-excel-o" />
-							<p:dataExporter type="xls" target="datatable" fileName="Lista" />
+							<p:dataExporter type="xlsx" target="datatable" fileName="Lista" />
 						</h:commandLink>
 					</f:facet>
 
