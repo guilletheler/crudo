@@ -9,6 +9,10 @@ import static com.github.adminfaces.template.util.Assert.has;
 
 import java.io.Serializable;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,8 +34,8 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	[$[REPO_CLASS_NAME]$] [$[REPO_VAR_NAME]$];
+	@Autowired
+	[$[SERVICE_CLASS_NAME]$] [$[SERVICE_VAR_NAME]$];
 
 	@Getter
 	@Setter
@@ -46,7 +50,7 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 			return;
 		}
 		if (has(id)) {
-			[$[VAR_NAME]$] = [$[VAR_NAME]$]Repo.findById(id).orElse(new [$[CLASS_NAME]$]());
+			[$[VAR_NAME]$] = [$[SERVICE_VAR_NAME]$].getRepo().findById(id).orElse(new [$[CLASS_NAME]$]());
 		} else {
 			[$[VAR_NAME]$] = new [$[CLASS_NAME]$]();
 		}
@@ -60,18 +64,31 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	}
 
 	public String save() {
-		String msg = "[$[CLASS_NAME]$] " + ([$[VAR_NAME]$].[$[ID_METHOD]$]);
+		String msg = null;
+		String ret = null;
+		Severity severity = FacesMessage.SEVERITY_INFO;
 
-		[$[REPO_VAR_NAME]$].save([$[VAR_NAME]$]);
+		try {
+			[$[SERVICE_VAR_NAME]$].save([$[VAR_NAME]$]);
+			
+			msg = "[$[CLASS_NAME]$] " + ([$[VAR_NAME]$].[$[ID_METHOD]$]);
+	
+			if ([$[VAR_NAME]$].getId() == null) {
+				msg += " creado exitosamente";
+			} else {
+				msg += " editado exitosamente";
+			}
+			addDetailMessage(msg);
 
-		if ([$[VAR_NAME]$].getId() == null) {
-			msg += " creado exitosamente";
-		} else {
-			msg += " editado exitosamente";
+			ret = "[$[LIST_PAGE_NAME]$]?faces-redirect=true";
+		} catch(ValidationException vex) {
+			msg = "Error:\n" + vex.getMessage();
+			severity = FacesMessage.SEVERITY_ERROR;
 		}
-		addDetailMessage(msg);
-
-		return "[$[LIST_PAGE_NAME]$]?faces-redirect=true";
+		
+		addDetailMessage(msg, severity);
+		
+		return ret;
 	}
 
 	public void clear() {

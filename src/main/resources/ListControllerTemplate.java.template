@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.LazyDataModel;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import [$[BASE_PACKAGE]$].infra.model.EntityLazyDataModel;
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
@@ -31,7 +32,7 @@ public class [$[LIST_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Inject
+	@Autowired
 	[$[REPO_CLASS_NAME]$] [$[REPO_VAR_NAME]$];
 	
 	@Inject

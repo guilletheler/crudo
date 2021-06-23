@@ -6,6 +6,8 @@ package [$[BASE_PACKAGE]$].service[$[SUB_PACKAGE]$];
 
 import java.util.Map;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,21 +18,33 @@ import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].service.QueryHelper;
 
+import lombok.Getter;
+
 @Service
 public class [$[SERVICE_CLASS_NAME]$] implements SelectableLazyDMFiller<[$[CLASS_NAME]$]> {
 
+	@Getter
 	@Autowired
-	[$[REPO_CLASS_NAME]$] [$[REPO_VAR_NAME]$];
+	[$[REPO_CLASS_NAME]$] repo;
 
 	public Page<[$[CLASS_NAME]$]> findByFilter(Map<String, String> filters, Pageable pageable) {
-		return [$[REPO_VAR_NAME]$].findAll(QueryHelper.getFilterSpecification(filters), pageable);
+		return getRepo().findAll(QueryHelper.getFilterSpecification(filters), pageable);
 	}
 
 	@Override
 	public [$[CLASS_NAME]$] findById(Object id) {
 		if(id != null) {
-			return [$[REPO_VAR_NAME]$].findById((Integer) id).orElse(null);
+			return getRepo().findById((Integer) id).orElse(null);
 		}
 		return null;
-	} 
+	}
+	
+	public [$[CLASS_NAME]$] save([$[CLASS_NAME]$] [$[VAR_NAME]$]) {
+		validate([$[VAR_NAME]$]);
+		return getRepo().save([$[VAR_NAME]$]);
+	}
+	
+	public void validate([$[CLASS_NAME]$] [$[VAR_NAME]$]) throw ValidationException {
+		//TODO: validar la entidad antes de guardarla
+	}
 }
