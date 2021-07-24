@@ -14,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ValidationException;
 
 import org.omnifaces.util.Faces;
 
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
-import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
+import [$[BASE_PACKAGE]$].service[$[SUB_PACKAGE]$].[$[SERVICE_CLASS_NAME]$];
 
 import lombok.Getter;
 import lombok.Setter;
@@ -78,7 +78,6 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 			} else {
 				msg += " editado exitosamente";
 			}
-			addDetailMessage(msg);
 
 			ret = "[$[LIST_PAGE_NAME]$]?faces-redirect=true";
 		} catch(ValidationException vex) {

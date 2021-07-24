@@ -44,7 +44,7 @@ public class [$[SERVICE_CLASS_NAME]$] implements SelectableLazyDMFiller<[$[CLASS
 		return getRepo().save([$[VAR_NAME]$]);
 	}
 	
-	public void validate([$[CLASS_NAME]$] [$[VAR_NAME]$]) throw ValidationException {
+	public void validate([$[CLASS_NAME]$] [$[VAR_NAME]$]) throws ValidationException {
 		//TODO: validar la entidad antes de guardarla
 	}
 }
