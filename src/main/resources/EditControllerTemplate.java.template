@@ -80,7 +80,7 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 			msg = "Error:\n" + vex.getMessage();
 			severity = FacesMessage.SEVERITY_ERROR;
 		}
-		addDetailMessage(msg);
+		addDetailMessage(msg, severity);
 
 		return ret;
 	}
