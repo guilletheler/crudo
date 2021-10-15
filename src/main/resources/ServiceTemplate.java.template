@@ -11,19 +11,31 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import [$[BASE_PACKAGE]$].infra.model.LazyDMFiller;
+import [$[BASE_PACKAGE]$].infra.model.SelectableLazyDMFiller;
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].service.QueryHelper;
 
 @Service
-public class [$[SERVICE_CLASS_NAME]$] implements LazyDMFiller<[$[CLASS_NAME]$]> {
+public class [$[SERVICE_CLASS_NAME]$] implements SelectableLazyDMFiller<[$[CLASS_NAME]$]> {
 
 	@Autowired
-	[$[REPO_CLASS_NAME]$] [$[REPO_VAR_NAME]$];
+	[$[REPO_CLASS_NAME]$] repo;
 
 	public Page<[$[CLASS_NAME]$]> findByFilter(Map<String, String> filters, Pageable pageable) {
-		return [$[REPO_VAR_NAME]$].findAll(QueryHelper.getFilterSpecification(filters), pageable);
+		return repo.findAll(QueryHelper.getFilterSpecification(filters), pageable);
 	}
 
+	@Override
+	public [$[CLASS_NAME]$] findById(Object id) {
+		if (id == null || !(id instanceof Integer)) {
+			return null;
+		}
+
+		return repo.findById((Integer) id).orElse(null);
+	}
+	
+	public void save([$[CLASS_NAME]$] [$[VAR_NAME]$]) {
+		repo.save([$[VAR_NAME]$]);
+	}
 }

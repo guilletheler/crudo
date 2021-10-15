@@ -3,6 +3,8 @@ package com.gt.crudo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CrudoFileWriter {
 
@@ -20,107 +22,107 @@ public class CrudoFileWriter {
 
 	private static void writeRepo(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
-			
+
 			@Override
 			public void write(PrintStream printStream) {
 				crudCreator.generateRepo(printStream);
 			}
-			
+
 			@Override
 			public String getFileName() {
 				return crudCreator.getRepoFileName();
 			}
-		}, replace);	
+		}, replace);
 	}
-	
+
 	private static void writeService(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
-			
+
 			@Override
 			public void write(PrintStream printStream) {
 				crudCreator.generateService(printStream);
 			}
-			
+
 			@Override
 			public String getFileName() {
 				return crudCreator.getServiceFileName();
 			}
-		}, replace);	
+		}, replace);
 	}
-	
+
 	private static void writeConverter(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
-			
+
 			@Override
 			public void write(PrintStream printStream) {
 				crudCreator.generateConverter(printStream);
 			}
-			
+
 			@Override
 			public String getFileName() {
 				return crudCreator.getConverterFileName();
 			}
-		}, replace);	
+		}, replace);
 	}
-	
+
 	private static void writeListController(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
-			
+
 			@Override
 			public void write(PrintStream printStream) {
 				crudCreator.generateListController(printStream);
 			}
-			
+
 			@Override
 			public String getFileName() {
 				return crudCreator.getListControllerFileName();
 			}
-		}, replace);	
+		}, replace);
 	}
-	
+
 	private static void writeEditController(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
-			
+
 			@Override
 			public void write(PrintStream printStream) {
 				crudCreator.generateEditController(printStream);
 			}
-			
+
 			@Override
 			public String getFileName() {
 				return crudCreator.getEditControllerFileName();
 			}
-		}, replace);	
+		}, replace);
 	}
-	
+
 	private static void writeListPage(CrudCreator crudCreator, String subFolder, boolean replace) {
 		writeFile(new CrudoGenerator() {
-			
+
 			@Override
 			public void write(PrintStream printStream) {
 				crudCreator.generateListPage(printStream);
 			}
-			
+
 			@Override
 			public String getFileName() {
 				return crudCreator.getListPageFileName(subFolder);
 			}
-		}, replace);	
+		}, replace);
 	}
-	
+
 	private static void writeEditPage(CrudCreator crudCreator, String subFolder, boolean replace) {
 		writeFile(new CrudoGenerator() {
-			
+
 			@Override
 			public void write(PrintStream printStream) {
 				crudCreator.generateEditPage(printStream);
 			}
-			
+
 			@Override
 			public String getFileName() {
 				return crudCreator.getEditPageFileName(subFolder);
 			}
-		}, replace);	
+		}, replace);
 	}
 
 	static void writeFile(CrudoGenerator csw, boolean replace) {
@@ -143,8 +145,7 @@ public class CrudoFileWriter {
 			out = new PrintStream(file);
 			csw.write(out);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al escribir archivo", e);
 		}
 
 	}

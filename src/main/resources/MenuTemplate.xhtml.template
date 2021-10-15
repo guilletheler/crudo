@@ -1,5 +1,5 @@
 <!-- MENU -->
-<sec:authorize access="hasRole('[$[ROLE_REQUIRED]$]')">
+<ui:fragment rendered="#{sessionMB.inRole('[$[ROLE_REQUIRED]$]')}">  
 	<li class="treeview"><a href="#"><i class="fa fa-database"></i>
 			<span>[$[MENU_NAME]$]</span> <i class="fa fa-angle-left pull-right"></i>
 	</a>
@@ -9,11 +9,11 @@
 					<span>[$[OPTION_MENU_NAME]$]</span>
 				</p:link></li>
 		</ul></li>
-</sec:authorize>
+</ui:fragment>
 <!-- FIN MENU -->
 
 <!-- MENUBAR-->
-<sec:authorize access="hasAnyRole('[$[ROLE_REQUIRED]$]')">
+<ui:fragment rendered="#{sessionMB.inRole('[$[ROLE_REQUIRED]$]')}">  
 	<li class="dropdown"><a href="#" class="dropdown-toggle"
 		data-toggle="dropdown">[$[MENU_NAME]$] <span class="caret"></span> <i
 			class="fa fa-gears"></i>
@@ -24,5 +24,5 @@
 					<span>[$[OPTION_MENU_NAME]$]</span>
 				</p:link></li>
 		</ul></li>
-</sec:authorize>
+</ui:fragment>
 <!-- FIN MENUBAR-->

@@ -61,8 +61,7 @@ public class DtoGenerator {
 				return null;
 			}
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al generar dto", e1);
 		}
 		
 		StringBuilder sb = new StringBuilder();
@@ -81,8 +80,7 @@ public class DtoGenerator {
 			createFields(rs.getMetaData(), sb);
 			setFields(rs.getMetaData(), sb);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al generar dto", e);
 		}
 		
 		
@@ -103,8 +101,7 @@ public class DtoGenerator {
 				try {
 					sb.append(Class.forName(metaData.getColumnClassName(i)).getSimpleName());
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al set fields", e);
 				}
 				sb.append(") fieldValues[");
 				sb.append((i - 1) + "");
@@ -112,8 +109,7 @@ public class DtoGenerator {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al set fields", e);
 		}
 		sb.append("\t}\n\n");
 		
@@ -129,8 +125,7 @@ public class DtoGenerator {
 				try {
 					sb.append(Class.forName(metaData.getColumnClassName(i)).getSimpleName());
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al set fields", e);
 				}
 				sb.append(") rs.getObject(");
 				sb.append(i + "");
@@ -140,8 +135,7 @@ public class DtoGenerator {
 			sb.append("\t\t\tLogger.getLogger(getClass().getName()).log(Level.SEVERE, \"Error al setear campos del dto" + className + "\");\n");
 			sb.append("\t\t}\n");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al set fields", e);
 		}
 		sb.append("\t}\n");
 		
@@ -154,11 +148,10 @@ public class DtoGenerator {
 				createField(sb, metaData.getColumnName(i), metaData.getColumnClassName(i));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al crear fields", e);
 		}
 	}
-
+	
 	private void createField(StringBuilder sb, String columnName, String columnClassName) {
 		try {
 			sb.append("\tprivate ");
@@ -168,8 +161,8 @@ public class DtoGenerator {
 			sb.append(";\n\n");
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(CrudoFileWriter.class.getName()).log(Level.SEVERE, "Error al crear field", e);
+			
 		}
 		
 	}

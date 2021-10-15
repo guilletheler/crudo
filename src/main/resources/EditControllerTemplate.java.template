@@ -9,9 +9,12 @@ import static com.github.adminfaces.template.util.Assert.has;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ValidationException;
 
 import org.omnifaces.util.Faces;
 
@@ -31,7 +34,7 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	[$[REPO_CLASS_NAME]$] [$[REPO_VAR_NAME]$];
+	[$[SERVICE_CLASS_NAME]$] [$[SERVICE_VAR_NAME]$];
 
 	@Getter
 	@Setter
@@ -61,17 +64,25 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 
 	public String save() {
 		String msg = "[$[CLASS_NAME]$] " + [$[VAR_NAME]$].[$[ID_METHOD]$];
-
-		[$[REPO_VAR_NAME]$].save([$[VAR_NAME]$]);
-
-		if ([$[VAR_NAME]$].getId() == null) {
-			msg += " creado exitosamente";
-		} else {
-			msg += " editado exitosamente";
+		String ret = null;
+		Severity severity = FacesMessage.SEVERITY_INFO;
+		
+		try {
+			[$[SERVICE_VAR_NAME]$].save([$[VAR_NAME]$]);
+	
+			if ([$[VAR_NAME]$].getId() == null) {
+				msg += " creado exitosamente";
+			} else {
+				msg += " editado exitosamente";
+			}
+			ret = "[$[LIST_PAGE_NAME]$]?faces-redirect=true";
+		} catch (ValidationException vex) {
+			msg = "Error:\n" + vex.getMessage();
+			severity = FacesMessage.SEVERITY_ERROR;
 		}
 		addDetailMessage(msg);
 
-		return "[$[LIST_PAGE_NAME]$]?faces-redirect=true";
+		return ret;
 	}
 
 	public void clear() {
