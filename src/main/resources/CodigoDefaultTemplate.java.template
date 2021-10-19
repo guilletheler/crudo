@@ -1,0 +1,1 @@
+[$[VAR_NAME]$].setCodigo([$[SERVICE_VAR_NAME]$].getRepo().nextCodigo());

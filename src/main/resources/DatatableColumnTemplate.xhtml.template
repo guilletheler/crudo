@@ -1,4 +1,4 @@
-<p:column headerText="[$[UPPER_FIELD_NAME]$]"
+<p:column [$[ID_ADMIN_VISIBLE]$] headerText="[$[UPPER_FIELD_NAME]$]"
 	sortBy="#{item.[$[FIELD_VAR_NAME]$]}"
 	filterBy="#{item.[$[FIELD_VAR_NAME]$]}" filterMatchMode="contains">
 	<p:outputLabel value="#{item.[$[FIELD_VAR_NAME]$]}"[$[F:CONVERTER]$]>

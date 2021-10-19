@@ -23,659 +23,692 @@ import lombok.extern.java.Log;
 @Log
 public class CrudCreator {
 
-    Class<?> entityClass;
+	Class<?> entityClass;
 
-    @Setter
-    String basePage;
+	@Setter
+	String basePage;
 
-    @Setter
-    String basePackage;
+	@Setter
+	String basePackage;
 
-    @Setter
-    String subPackage;
+	@Setter
+	String subPackage;
 
-    @Getter
-    @Setter
-    String roleRequired;
+	@Getter
+	@Setter
+	String roleRequired;
 
-    @Getter
-    @Setter
-    String menuName;
+	@Getter
+	@Setter
+	String menuName;
 
-    @Getter
-    @Setter
-    File projectSourceFolder;
+	@Getter
+	@Setter
+	File projectSourceFolder;
 
-    String varName;
-    String pluralVarName;
-    String pluralClassName;
+	String varName;
+	String pluralVarName;
+	String pluralClassName;
 
-    String listControllerVarName;
-    String listControllerClassName;
-    String editControllerVarName;
-    String editControllerClassName;
+	String listControllerVarName;
+	String listControllerClassName;
+	String editControllerVarName;
+	String editControllerClassName;
 
-    public CrudCreator(Class<?> entityClass) {
-        super();
-        this.entityClass = entityClass;
-    }
+	public CrudCreator(Class<?> entityClass) {
+		super();
+		this.entityClass = entityClass;
+	}
 
-    public String getProjectBase() {
+	public String getProjectBase() {
 
-        String ret = projectSourceFolder.getAbsoluteFile() + File.separator + "src" + File.separator + "main"
-                + File.separator + "java";
+		String ret = projectSourceFolder.getAbsoluteFile() + File.separator + "src" + File.separator + "main"
+				+ File.separator + "java";
 
-        for (String subFolder : getBasePackage().split("\\.")) {
-            ret += File.separator + subFolder;
-        }
+		for (String subFolder : getBasePackage().split("\\.")) {
+			ret += File.separator + subFolder;
+		}
 
-        return ret;
-    }
+		return ret;
+	}
 
-    public String getListControllerFileName() {
-        return getJavaFileName("controller", getListControllerClassName());
-    }
+	public String getListControllerFileName() {
+		return getJavaFileName("controller", getListControllerClassName());
+	}
 
-    public void generateListController(PrintStream print) {
+	public void generateListController(PrintStream print) {
 
-        String template = loadTemplate("ListControllerTemplate.java");
+		String template = loadTemplate("ListControllerTemplate.java");
 
-        if (template == null) {
-            return;
-        }
+		if (template == null) {
+			return;
+		}
 
-        String ret = replaceVars(template);
+		String ret = replaceVars(template);
 
-        ret = ret.replace("[$[FILENAME]$]", getListControllerFileName());
+		ret = ret.replace("[$[FILENAME]$]", getListControllerFileName());
 
-        print.println(ret);
-    }
+		print.println(ret);
+	}
 
-    public String getEditControllerFileName() {
-        return getJavaFileName("controller", getEditControllerClassName());
-    }
+	public String getEditControllerFileName() {
+		return getJavaFileName("controller", getEditControllerClassName());
+	}
 
-    public void generateEditController(PrintStream print) {
+	public void generateEditController(PrintStream print) {
 
-        String template = loadTemplate("EditControllerTemplate.java");
+		String template = loadTemplate("EditControllerTemplate.java");
 
-        if (template == null) {
-            return;
-        }
+		if (template == null) {
+			return;
+		}
 
-        String ret = replaceVars(template);
+		String ret = replaceVars(template);
 
-        ret = ret.replace("[$[FILENAME]$]", getEditControllerFileName());
+		ret = ret.replace("[$[FILENAME]$]", getEditControllerFileName());
 
-        print.println(ret);
-    }
+		String codigoDefault = "";
 
-    public String getRepoFileName() {
-        return getJavaFileName("repo", getRepoClassName());
-    }
+		if (getTieneCodigo()) {
+			codigoDefault = replaceVars(loadTemplate("CodigoDefaultTemplate.java"));
+		}
 
-    public void generateRepo(PrintStream print) {
+		ret = ret.replace("[$[CODIGO_DEFAULT]$]", codigoDefault);
 
-        String template = loadTemplate("RepoTemplate.java");
+		print.println(ret);
+	}
 
-        if (template == null) {
-            return;
-        }
+	public String getRepoFileName() {
+		return getJavaFileName("repo", getRepoClassName());
+	}
 
-        String ret = replaceVars(template);
+	public void generateRepo(PrintStream print) {
 
-        ret = ret.replace("[$[FILENAME]$]", getRepoFileName());
+		String template = loadTemplate("RepoTemplate.java");
 
-        String codigoQuery = "";
-        try {
-            entityClass.getMethod("getCodigo");
-            entityClass.getMethod("setCodigo");
-            codigoQuery = loadTemplate("CodigoQueryTemplate.java");
-        } catch (NoSuchMethodException | SecurityException e) {
+		if (template == null) {
+			return;
+		}
 
-        }
+		String ret = replaceVars(template);
 
-        ret = ret.replace("[$[CODIGO_QUERY]$]", codigoQuery);
+		ret = ret.replace("[$[FILENAME]$]", getRepoFileName());
 
-        print.println(ret);
-    }
+		String codigoQuery = "";
 
-    public String getServiceFileName() {
-        return getJavaFileName("service", getServiceClassName());
-    }
+		if (getTieneCodigo()) {
+			codigoQuery = replaceVars(loadTemplate("CodigoQueryTemplate.java"));
+		}
 
-    public void generateService(PrintStream print) {
+		ret = ret.replace("[$[CODIGO_QUERY]$]", codigoQuery);
 
-        String template = loadTemplate("ServiceTemplate.java");
+		print.println(ret);
+	}
 
-        if (template == null) {
-            return;
-        }
+	private boolean getTieneCodigo() {
+		boolean esta = false;
 
-        String ret = replaceVars(template);
+		try {
+			entityClass.getMethod("getCodigo");
+//            entityClass.getMethod("setCodigo");
+			esta = true;
+		} catch (NoSuchMethodException | SecurityException e) {
 
-        ret = ret.replace("[$[FILENAME]$]", getServiceFileName());
+		}
+		try {
+			entityClass.getMethod("getCodigoNombre");
+//            entityClass.getMethod("setCodigo");
+			esta = true;
+		} catch (NoSuchMethodException | SecurityException e) {
 
-        print.println(ret);
-    }
+		}
+		return esta;
+	}
 
-    public String getListPageFileName(String subFolder) {
-        return getXhtmlFileName(subFolder, getListPageName());
-    }
+	public String getServiceFileName() {
+		return getJavaFileName("service", getServiceClassName());
+	}
 
-    public void generateListPage(PrintStream print) {
+	public void generateService(PrintStream print) {
 
-        String template = this.loadTemplate("ListPageTemplate.xhtml");
+		String template = loadTemplate("ServiceTemplate.java");
 
-        if (template == null) {
-            return;
-        }
+		if (template == null) {
+			return;
+		}
 
-        String columnTemplate = this.loadTemplate("DatatableColumnTemplate.xhtml");
+		String ret = replaceVars(template);
 
-        StringBuilder allColumns = new StringBuilder();
+		ret = ret.replace("[$[FILENAME]$]", getServiceFileName());
 
-        for (Method m : entityClass.getMethods()) {
-            if (notListableMethod(m)) {
-                continue;
-            }
-            if (allColumns.length() > 0) {
-                allColumns.append("\n");
-            }
-            allColumns.append(replaceColumnsVars(columnTemplate,
-                    m.getName().substring(3, 4).toLowerCase() + m.getName().substring(4), m.getReturnType()));
+		print.println(ret);
+	}
 
-        }
+	public String getListPageFileName(String subFolder) {
+		return getXhtmlFileName(subFolder, getListPageName());
+	}
 
-        template = template.replace("[$[DATATABLE_COLUMNS]$]", allColumns.toString());
+	public void generateListPage(PrintStream print) {
 
-        print.println(replaceVars(template));
-    }
+		String template = this.loadTemplate("ListPageTemplate.xhtml");
 
-    public void generateMenuDefinition(PrintStream print, String pagesSubFolder) {
+		if (template == null) {
+			return;
+		}
 
-        String ret = this.loadTemplate("MenuTemplate.xhtml");
+		String columnTemplate = this.loadTemplate("DatatableColumnTemplate.xhtml");
 
-        ret = ret.replace("[$[ROLE_REQUIRED]$]", getRoleRequired() == null ? "ROL_REQUIRED" : getRoleRequired());
-        ret = ret.replace("[$[MENU_NAME]$]", getMenuName() == null ? "MENU" : getMenuName());
-        ret = ret.replace("[$[PAGE_LIST_PATH]$]", getPagePath(pagesSubFolder, getListPageName()).replace("\\", "/"));
-        ret = ret.replace("[$[OPTION_MENU_NAME]$]", getClassName());
+		StringBuilder allColumns = new StringBuilder();
 
-        print.println(ret);
-    }
+		for (Method m : entityClass.getMethods()) {
+			if (notListableMethod(m)) {
+				continue;
+			}
+			if (allColumns.length() > 0) {
+				allColumns.append("\n");
+			}
+			allColumns.append(replaceColumnsVars(columnTemplate,
+					m.getName().substring(3, 4).toLowerCase() + m.getName().substring(4), m.getReturnType()));
 
-    public void generateEnumsMB(PrintStream print) {
-        print.println();
-        print.println();
-        print.println("Agregar a EnumMB");
-        print.println();
+		}
 
-        for (Method m : entityClass.getMethods()) {
-            if (m.getName().startsWith("get") && Enum.class.isAssignableFrom(m.getReturnType())) {
-                print.println("public " + m.getReturnType().getSimpleName() + "[] get"
-                        + m.getReturnType().getSimpleName() + "() {\r\n"
-                        + "		return " + m.getReturnType().getSimpleName() + ".values();\r\n"
-                        + "	}");
-            }
-        }
-        print.println();
-        print.println("Fin agregar a EnumMB");
-        print.println();
-    }
+		template = template.replace("[$[DATATABLE_COLUMNS]$]", allColumns.toString());
 
-    public String getConverterFileName() {
-        return getJavaFileName("infra" + File.separator + "converter", getConverterClassName());
-    }
+		print.println(replaceVars(template));
+	}
 
-    public void generateConverter(PrintStream print) {
-        String template = loadTemplate("ConverterTemplate.java");
+	public void generateMenuDefinition(PrintStream print, String pagesSubFolder) {
 
-        if (template == null) {
-            return;
-        }
+		String ret = this.loadTemplate("MenuTemplate.xhtml");
 
-        String ret = replaceVars(template);
+		ret = ret.replace("[$[ROLE_REQUIRED]$]", getRoleRequired() == null ? "ROL_REQUIRED" : getRoleRequired());
+		ret = ret.replace("[$[MENU_NAME]$]", getMenuName() == null ? "MENU" : getMenuName());
+		ret = ret.replace("[$[PAGE_LIST_PATH]$]", getPagePath(pagesSubFolder, getListPageName()).replace("\\", "/"));
+		ret = ret.replace("[$[OPTION_MENU_NAME]$]", getClassName());
 
-        ret = ret.replace("[$[FILENAME]$]", getConverterFileName());
+		print.println(ret);
+	}
 
-        print.println(ret);
-    }
+	public void generateEnumsMB(PrintStream print) {
+		print.println();
+		print.println();
+		print.println("Agregar a EnumMB");
+		print.println();
 
-    public String getEditPageFileName(String subFolder) {
-        return getXhtmlFileName(subFolder, getEditPageName());
-    }
+		for (Method m : entityClass.getMethods()) {
+			if (m.getName().startsWith("get") && Enum.class.isAssignableFrom(m.getReturnType())) {
+				print.println("public " + m.getReturnType().getSimpleName() + "[] get"
+						+ m.getReturnType().getSimpleName() + "() {\r\n" + "		return "
+						+ m.getReturnType().getSimpleName() + ".values();\r\n" + "	}");
+			}
+		}
+		print.println();
+		print.println("Fin agregar a EnumMB");
+		print.println();
+	}
 
-    public void generateEditPage(PrintStream print) {
+	public String getConverterFileName() {
+		return getJavaFileName("infra" + File.separator + "converter", getConverterClassName());
+	}
 
-        String template = this.loadTemplate("EditPageTemplate.xhtml");
+	public void generateConverter(PrintStream print) {
+		String template = loadTemplate("ConverterTemplate.java");
 
-        if (template == null) {
-            return;
-        }
+		if (template == null) {
+			return;
+		}
 
-        StringBuilder allColumns = new StringBuilder();
+		String ret = replaceVars(template);
 
-        for (Method m : entityClass.getMethods()) {
+		ret = ret.replace("[$[FILENAME]$]", getConverterFileName());
 
-            String fieldName = getEditableFieldName(m);
+		print.println(ret);
+	}
 
-            if (fieldName == null) {
-                continue;
-            }
+	public String getEditPageFileName(String subFolder) {
+		return getXhtmlFileName(subFolder, getEditPageName());
+	}
 
-            if (allColumns.length() > 0) {
-                allColumns.append("\n");
-            }
+	public void generateEditPage(PrintStream print) {
 
-            allColumns.append(buildEditField(fieldName, m.getReturnType()));
+		String template = this.loadTemplate("EditPageTemplate.xhtml");
 
-        }
+		if (template == null) {
+			return;
+		}
 
-        template = template.replace("[$[EDIT_FIELDS]$]", allColumns.toString());
+		StringBuilder allColumns = new StringBuilder();
 
-        print.println(replaceVars(template));
-    }
+		for (Method m : entityClass.getMethods()) {
 
-    private String replaceVars(String in) {
-        String ret = in;
+			String fieldName = getEditableFieldName(m);
 
-        // Ejemplo clase Usuario
-        // Usuario
-        ret = ret.replace("[$[CLASS_NAME]$]", getClassName());
+			if (fieldName == null) {
+				continue;
+			}
 
-        // usuario
-        ret = ret.replace("[$[VAR_NAME]$]", getVarName());
+			if (allColumns.length() > 0) {
+				allColumns.append("\n");
+			}
 
-        // USUARIO
-        ret = ret.replace("[$[UPPER_NAME]$]", getVarName().toUpperCase());
+			if (fieldName.startsWith("_")) {
+				// read only
+				allColumns.append(buildReadOnlyField(fieldName.substring(1), m.getReturnType()));
+			} else {
+				allColumns.append(buildEditField(fieldName, m.getReturnType()));
+			}
 
-        // Usuarios
-        ret = ret.replace("[$[PLURAL_CLASS_NAME]$]", getPluralClassName());
+		}
 
-        // usuarios
-        ret = ret.replace("[$[PLURAL_VAR_NAME]$]", getPluralVarName());
+		template = template.replace("[$[EDIT_FIELDS]$]", allColumns.toString());
 
-        // USUARIOS
-        ret = ret.replace("[$[PLURAL_UPPER_NAME]$]", getPluralVarName().toUpperCase());
+		print.println(replaceVars(template));
+	}
 
-        // UsuarioRepo
-        ret = ret.replace("[$[REPO_CLASS_NAME]$]", getRepoClassName());
+	private String replaceVars(String in) {
+		String ret = in;
 
-        // usuarioRepo
-        ret = ret.replace("[$[REPO_VAR_NAME]$]", getRepoVarName());
+		// Ejemplo clase Usuario
+		// Usuario
+		ret = ret.replace("[$[CLASS_NAME]$]", getClassName());
 
-        // UsuarioService
-        ret = ret.replace("[$[SERVICE_CLASS_NAME]$]", getServiceClassName());
+		// usuario
+		ret = ret.replace("[$[VAR_NAME]$]", getVarName());
 
-        // usuarioService
-        ret = ret.replace("[$[SERVICE_VAR_NAME]$]", getServiceVarName());
+		// USUARIO
+		ret = ret.replace("[$[UPPER_NAME]$]", getVarName().toUpperCase());
 
-        // UsuarioListController
-        ret = ret.replace("[$[LIST_CONTROLLER_CLASS_NAME]$]", getListControllerClassName());
+		// Usuarios
+		ret = ret.replace("[$[PLURAL_CLASS_NAME]$]", getPluralClassName());
 
-        // usuarioListController
-        ret = ret.replace("[$[LIST_CONTROLLER_VAR_NAME]$]", getListControllerVarName());
+		// usuarios
+		ret = ret.replace("[$[PLURAL_VAR_NAME]$]", getPluralVarName());
 
-        // UsuarioEditController
-        ret = ret.replace("[$[EDIT_CONTROLLER_CLASS_NAME]$]", getEditControllerClassName());
+		// USUARIOS
+		ret = ret.replace("[$[PLURAL_UPPER_NAME]$]", getPluralVarName().toUpperCase());
 
-        // UsuarioEditController
-        ret = ret.replace("[$[EDIT_CONTROLLER_VAR_NAME]$]", getEditControllerVarName());
+		// UsuarioRepo
+		ret = ret.replace("[$[REPO_CLASS_NAME]$]", getRepoClassName());
 
-        // UsuarioEdit
-        ret = ret.replace("[$[EDIT_PAGE_NAME]$]", getEditPageName());
-        // UsuariosList
-        ret = ret.replace("[$[LIST_PAGE_NAME]$]", getListPageName());
+		// usuarioRepo
+		ret = ret.replace("[$[REPO_VAR_NAME]$]", getRepoVarName());
 
-        ret = ret.replace("[$[BASE_PACKAGE]$]", getBasePackage());
+		// UsuarioService
+		ret = ret.replace("[$[SERVICE_CLASS_NAME]$]", getServiceClassName());
 
-        ret = ret.replace("[$[SUB_PACKAGE]$]", getSubPackage());
+		// usuarioService
+		ret = ret.replace("[$[SERVICE_VAR_NAME]$]", getServiceVarName());
 
-        ret = ret.replace("[$[ID_METHOD]$]", getIdMethod());
+		// UsuarioListController
+		ret = ret.replace("[$[LIST_CONTROLLER_CLASS_NAME]$]", getListControllerClassName());
 
-        return ret;
-    }
+		// usuarioListController
+		ret = ret.replace("[$[LIST_CONTROLLER_VAR_NAME]$]", getListControllerVarName());
 
-    private String getIdMethod() {
-        try {
-            entityClass.getMethod("getNombre");
-            return "getNombre()";
-        } catch (NoSuchMethodException | SecurityException e) {
+		// UsuarioEditController
+		ret = ret.replace("[$[EDIT_CONTROLLER_CLASS_NAME]$]", getEditControllerClassName());
 
-        }
-        return "getId() == null ? \" NUEVO\" : " + varName + ".getId().toString()";
-    }
+		// UsuarioEditController
+		ret = ret.replace("[$[EDIT_CONTROLLER_VAR_NAME]$]", getEditControllerVarName());
 
-    private String replaceColumnsVars(String columnTemplate, String fieldName, Class<?> clazz) {
-        return replaceColumnsVars(columnTemplate, fieldName, clazz, "", "");
-    }
+		// UsuarioEdit
+		ret = ret.replace("[$[EDIT_PAGE_NAME]$]", getEditPageName());
+		// UsuariosList
+		ret = ret.replace("[$[LIST_PAGE_NAME]$]", getListPageName());
 
-    private String replaceColumnsVars(String columnTemplate, String fieldName, Class<?> clazz, String refList,
-            String refVar) {
-        String ret = columnTemplate;
+		ret = ret.replace("[$[BASE_PACKAGE]$]", getBasePackage());
 
-        ret = ret.replace("[$[UPPER_FIELD_NAME]$]", fieldName.toUpperCase());
-        ret = ret.replace("[$[FIELD_VAR_NAME]$]", fieldName);
+		ret = ret.replace("[$[SUB_PACKAGE]$]", getSubPackage());
 
-        ret = ret.replace("[$[REF_LIST]$]", refList);
-        ret = ret.replace("[$[REF_VAR]$]", refVar);
+		ret = ret.replace("[$[ID_METHOD]$]", getIdMethod());
 
-        String converter = "/";
-        String decimalPlaces = "2";
+		return ret;
+	}
 
-        switch (clazz.getSimpleName()) {
-            case "int":
-            case "Integer":
-            case "long":
-            case "Long":
-                decimalPlaces = "0";
-                break;
-            case "float":
-            case "Float":
-            case "double":
-            case "Double":
-                converter = "><f:convertNumber pattern=\"#0.00\" /></p:outputLabel";
-                break;
-            case "Date":
-                converter = "><f:convertDateTime timeZone=\"America/Buenos_Aires\" type=\"date\" pattern=\"dd/MM/yyyy\"/></p:outputLabel";
-                break;
-        }
+	private String getIdMethod() {
+		try {
+			entityClass.getMethod("getNombre");
+			return "getNombre()";
+		} catch (NoSuchMethodException | SecurityException e) {
 
-        ret = ret.replace("[$[DECIMAL_PLACES]$]", decimalPlaces);
-        ret = ret.replace("[$[F:CONVERTER]$]", converter);
-        return ret;
-    }
+		}
+		return "getId() == null ? \" NUEVO\" : " + varName + ".getId().toString()";
+	}
 
-    private boolean notListableMethod(Method m) {
+	private String replaceColumnsVars(String columnTemplate, String fieldName, Class<?> clazz) {
+		return replaceColumnsVars(columnTemplate, fieldName, clazz, "", "");
+	}
 
-        if (m.isBridge()) {
-            return true;
-        }
+	private String replaceColumnsVars(String columnTemplate, String fieldName, Class<?> clazz, String refList,
+			String refVar) {
+		String ret = columnTemplate;
 
-        if (m.getName().startsWith("get")) {
-            try {
-                entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
+		ret = ret.replace("[$[UPPER_FIELD_NAME]$]", fieldName.toUpperCase());
+		ret = ret.replace("[$[FIELD_VAR_NAME]$]", fieldName);
 
-                // Si es coleccion
-                if (List.class.isAssignableFrom(m.getReturnType())
-                        || Set.class.isAssignableFrom(m.getReturnType())
-                        || Map.class.isAssignableFrom(m.getReturnType())
-                        || Collection.class.isAssignableFrom(m.getReturnType())) {
-                    return true;
-                }
+		ret = ret.replace("[$[REF_LIST]$]", refList);
+		ret = ret.replace("[$[REF_VAR]$]", refVar);
 
-                // el
-                if (m.getName().equals("getObservaciones")) {
-                    return true;
-                }
+		if (fieldName.equalsIgnoreCase("id")) {
+			ret = ret.replace("[$[ID_ADMIN_VISIBLE]$]", "visible=\"#{sessionMB.inRole('SYSADMIN')}\"");
+			ret = ret.replace("[$[DIV_ADMIN_VISIBLE]$]", "style=\"#{(sessionMB.inRole('SYSADMIN'))?'':'display:none'}\"");
+		} else {
+			ret = ret.replace("[$[ID_ADMIN_VISIBLE]$]", "");
+			ret = ret.replace("[$[DIV_ADMIN_VISIBLE]$]", "");
+		}
 
-                return false;
-            } catch (NoSuchMethodException | SecurityException e) {
-                // el metodo no existe
-            }
+		String converter = "/";
+		String decimalPlaces = "2";
 
-        }
+		switch (clazz.getSimpleName()) {
+		case "int":
+		case "Integer":
+		case "long":
+		case "Long":
+			decimalPlaces = "0";
+			break;
+		case "float":
+		case "Float":
+		case "double":
+		case "Double":
+			converter = "><f:convertNumber pattern=\"#0.00\" /></p:outputLabel";
+			break;
+		case "Date":
+			converter = "><f:convertDateTime timeZone=\"America/Buenos_Aires\" type=\"date\" pattern=\"dd/MM/yyyy\"/></p:outputLabel";
+			break;
+		}
 
-        /**
-         * Campo boolean
-         */
-        if (m.getName().startsWith("is")) {
-            try {
-                entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
+		ret = ret.replace("[$[DECIMAL_PLACES]$]", decimalPlaces);
+		ret = ret.replace("[$[F:CONVERTER]$]", converter);
+		return ret;
+	}
 
-                return false;
-            } catch (NoSuchMethodException | SecurityException e) {
-                // el metodo no existe
-            }
+	private boolean notListableMethod(Method m) {
 
-        }
+		if (m.isBridge()) {
+			return true;
+		}
 
-        return true;
-    }
+		if (m.getName().startsWith("get")) {
+			try {
+				entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
 
-    private String getEditableFieldName(Method m) {
+				// Si es coleccion
+				if (List.class.isAssignableFrom(m.getReturnType()) || Set.class.isAssignableFrom(m.getReturnType())
+						|| Map.class.isAssignableFrom(m.getReturnType())
+						|| Collection.class.isAssignableFrom(m.getReturnType())) {
+					return true;
+				}
 
-        if (m.isBridge()) {
-            return null;
-        }
+				// el
+				if (m.getName().equals("getObservaciones")) {
+					return true;
+				}
 
-        if (m.getName().equals("getId")) {
-            return null;
-        }
+				return false;
+			} catch (NoSuchMethodException | SecurityException e) {
+				// el metodo no existe
+			}
 
-        if (m.getName().startsWith("get")) {
-            try {
-                entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
+		}
 
-                if (Collections.class.isAssignableFrom(m.getReturnType())
-                        || Iterable.class.isAssignableFrom(m.getReturnType())
-                        || Map.class.isAssignableFrom(m.getReturnType())) {
-                    return null;
-                }
+		/**
+		 * Campo boolean
+		 */
+		if (m.getName().startsWith("is")) {
+			try {
+				entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
 
-                return m.getName().substring(3, 4).toLowerCase() + m.getName().substring(4);
-            } catch (NoSuchMethodException | SecurityException e) {
-                // el metodo no existe
-            }
+				return false;
+			} catch (NoSuchMethodException | SecurityException e) {
+				// el metodo no existe
+			}
 
-        }
+		}
 
-        /**
-         * Campo boolean
-         */
-        if (m.getName().startsWith("is")) {
-            try {
-                entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
+		return true;
+	}
 
-                return m.getName().substring(2, 3).toLowerCase() + m.getName().substring(3);
-            } catch (NoSuchMethodException | SecurityException e) {
-                // el metodo no existe
-            }
+	private String getEditableFieldName(Method m) {
 
-        }
+		if (m.isBridge()) {
+			return null;
+		}
 
-        return null;
-    }
+		if (m.getName().equals("getId")) {
+			return "_id";
+		}
 
-    private String loadTemplate(String templateFileName) {
+		if (m.getName().startsWith("get")) {
+			try {
+				entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
 
-        templateFileName += ".template";
-        
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(templateFileName);
+				if (Collections.class.isAssignableFrom(m.getReturnType())
+						|| Iterable.class.isAssignableFrom(m.getReturnType())
+						|| Map.class.isAssignableFrom(m.getReturnType())) {
+					return null;
+				}
 
-        String template = null;
+				return m.getName().substring(3, 4).toLowerCase() + m.getName().substring(4);
+			} catch (NoSuchMethodException | SecurityException e) {
+				// el metodo no existe
+			}
 
-        try {
-            template = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
-        } catch (IOException e) {
-            log.log(Level.SEVERE, templateFileName, e);
-        }
+		}
 
-        return template;
-    }
+		/**
+		 * Campo boolean
+		 */
+		if (m.getName().startsWith("is")) {
+			try {
+				entityClass.getMethod("set" + m.getName().substring(3), m.getReturnType());
 
-    private String buildEditField(String fieldName, Class<?> returnType) {
-        switch (returnType.getSimpleName()) {
-            case "Date":
-                return buildEdit("EditCalendarTemplate.xhtml", fieldName, Date.class);
-            case "boolean":
-            case "Boolean":
-                return buildEdit("EditToggleTemplate.xhtml", fieldName, Boolean.class);
-            case "int":
-            case "Integer":
-            case "long":
-            case "Long":
-                return buildEdit("EditNumberTemplate.xhtml", fieldName, Integer.class);
-            case "float":
-            case "Float":
-            case "double":
-            case "Double":
-                return buildEdit("EditNumberTemplate.xhtml", fieldName, Double.class);
-            case "String":
-                if (fieldName.equals("observaciones")) {
-                    return buildEdit("EditObservacionesTemplate.xhtml", "observaciones", String.class);
-                }
-                return buildEdit("EditTextFieldTemplate.xhtml", fieldName, String.class);
-        }
+				return m.getName().substring(2, 3).toLowerCase() + m.getName().substring(3);
+			} catch (NoSuchMethodException | SecurityException e) {
+				// el metodo no existe
+			}
 
-        if (Enum.class.isAssignableFrom(returnType)) {
-            // es un enum;
-            String enumDescription = "name()";
-            try {
-                returnType.getMethod("getDescripcion");
-                enumDescription = "descripcion";
-            } catch (NoSuchMethodException | SecurityException e) {
-            }
-            return buildEditCombo(fieldName, "enumsMB." + returnType.getSimpleName().substring(0, 1).toLowerCase()
-                    + returnType.getSimpleName().substring(1), enumDescription);
-        }
+		}
 
-        // es un enum;
-        return buildEditCombo(fieldName, returnType.getSimpleName().substring(0, 1).toLowerCase()
-                + returnType.getSimpleName().substring(1) + "Repo.findAll()", "etiqueta");
+		return null;
+	}
 
-    }
+	private String loadTemplate(String templateFileName) {
 
-    private String buildEdit(String templateName, String fieldName, Class<?> retClass) {
-        String template = this.loadTemplate(templateName);
+		templateFileName += ".template";
 
-        return replaceColumnsVars(template, fieldName, retClass);
-    }
+		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(templateFileName);
 
-    private String buildEditCombo(String fieldName, String refList, String refVar) {
-        String template = this.loadTemplate("EditComboTemplate.xhtml");
+		String template = null;
 
-        return replaceColumnsVars(template, fieldName, Date.class, refList, refVar);
-    }
+		try {
+			template = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
+		} catch (IOException e) {
+			log.log(Level.SEVERE, templateFileName, e);
+		}
 
-    public String getVarName() {
-        if (varName == null) {
-            varName = entityClass.getSimpleName().substring(0, 1).toLowerCase()
-                    + entityClass.getSimpleName().substring(1);
-        }
-        return varName;
-    }
-
-    public String getClassName() {
-        return entityClass.getSimpleName();
-    }
+		return template;
+	}
 
-    public String getPluralVarName() {
-        if (pluralVarName == null) {
-            pluralVarName = getPluralClassName().substring(0, 1).toLowerCase() + getPluralClassName().substring(1);
-        }
-
-        return pluralVarName;
-    }
+	private String buildReadOnlyField(String fieldName, Class<?> returnType) {
+		String template = this.loadTemplate("ReadOnlyFieldTemplate.xhtml");
 
-    public String getPluralClassName() {
-        if (pluralClassName == null) {
-            pluralClassName = getClassName();
+		return replaceColumnsVars(template, fieldName, returnType);
+	}
 
-            if (pluralClassName.endsWith("a") || pluralClassName.endsWith("e") || pluralClassName.endsWith("i")
-                    || pluralClassName.endsWith("o")
-                    || pluralClassName.endsWith("u")) {
-                pluralClassName += "s";
-            } else {
-                pluralClassName += "es";
-            }
-        }
-        return pluralClassName;
-    }
-
-    public String getListControllerClassName() {
-        return getClassName() + "ListController";
-    }
-
-    public String getListControllerVarName() {
-        return getListControllerClassName().substring(0, 1).toLowerCase() + getListControllerClassName().substring(1);
-    }
-
-    public String getEditControllerClassName() {
-        return getClassName() + "EditController";
-    }
-
-    public String getEditControllerVarName() {
-        return getEditControllerClassName().substring(0, 1).toLowerCase() + getEditControllerClassName().substring(1);
-    }
-
-    public String getRepoClassName() {
-        return getClassName() + "Repo";
-    }
-
-    public String getRepoVarName() {
-        return getRepoClassName().substring(0, 1).toLowerCase() + getRepoClassName().substring(1);
-    }
-
-    public String getServiceClassName() {
-        return getClassName() + "Service";
-    }
-
-    public String getConverterClassName() {
-        return getClassName() + "Converter";
-    }
-
-    public String getServiceVarName() {
-        return getServiceClassName().substring(0, 1).toLowerCase() + getServiceClassName().substring(1);
-    }
-
-    public String getListPageName() {
-        return getPluralClassName() + "List";
-    }
-
-    public String getEditPageName() {
-        return getClassName() + "Edit";
-    }
-
-    public String getBasePackage() {
-        if (basePackage == null) {
-            int pos = entityClass.getName().indexOf(".model");
-            basePackage = entityClass.getName().substring(0, pos);
-        }
-        return basePackage;
-    }
-
-    public String getSubPackage() {
-        if (subPackage == null) {
-            int pos = entityClass.getName().indexOf(".model");
-            subPackage = entityClass.getName().substring(pos + 6,
-                    entityClass.getName().length() - (entityClass.getSimpleName().length() + 1));
-        }
-        return subPackage;
-    }
-
-    private String getJavaFileName(String modulo, String className) {
-        String fileName = getProjectSourceFolder().getAbsolutePath() + File.separator + "src" + File.separator + "main"
-                + File.separator
-                + "java" + File.separator
-                + getBasePackage().replace(".", File.separator)
-                + File.separator + modulo + getSubPackage().replace(".", File.separator)
-                + File.separator
-                + className + ".java";
-
-        return fileName.replace(File.separator + "." + File.separator,
-                File.separator);
-    }
-
-    private String getXhtmlFileName(String subFolder, String pageName) {
-
-        String pagePath = getPagePath(subFolder, pageName);
-
-        String fileName = getProjectSourceFolder().getAbsolutePath() + File.separator + "src" + File.separator + "main"
-                + File.separator
-                + "webapp" + pagePath + ".xhtml";
-
-        String ret = fileName.replace(File.separator + "." + File.separator,
-                File.separator);
-
-        return ret;
-    }
-
-    private String getPagePath(String subFolder, String pageName) {
-        return File.separator + "pages" + File.separator
-                + subFolder.replace(".", File.separator)
-                + File.separator
-                + pageName;
-    }
+	private String buildEditField(String fieldName, Class<?> returnType) {
+		switch (returnType.getSimpleName()) {
+		case "Date":
+			return buildEdit("EditCalendarTemplate.xhtml", fieldName, Date.class);
+		case "boolean":
+		case "Boolean":
+			return buildEdit("EditToggleTemplate.xhtml", fieldName, Boolean.class);
+		case "int":
+		case "Integer":
+		case "long":
+		case "Long":
+			return buildEdit("EditNumberTemplate.xhtml", fieldName, Integer.class);
+		case "float":
+		case "Float":
+		case "double":
+		case "Double":
+			return buildEdit("EditNumberTemplate.xhtml", fieldName, Double.class);
+		case "String":
+			if (fieldName.equals("observaciones")) {
+				return buildEdit("EditObservacionesTemplate.xhtml", "observaciones", String.class);
+			}
+			return buildEdit("EditTextFieldTemplate.xhtml", fieldName, String.class);
+		}
+
+		if (Enum.class.isAssignableFrom(returnType)) {
+			// es un enum;
+			String enumDescription = "name()";
+			try {
+				returnType.getMethod("getDescripcion");
+				enumDescription = "descripcion";
+			} catch (NoSuchMethodException | SecurityException e) {
+			}
+			return buildEditCombo(fieldName, "enumsMB." + returnType.getSimpleName().substring(0, 1).toLowerCase()
+					+ returnType.getSimpleName().substring(1), enumDescription);
+		}
+
+		// es un enum;
+		return buildEditCombo(fieldName, returnType.getSimpleName().substring(0, 1).toLowerCase()
+				+ returnType.getSimpleName().substring(1) + "Repo.findAll()", "etiqueta");
+
+	}
+
+	private String buildEdit(String templateName, String fieldName, Class<?> retClass) {
+		String template = this.loadTemplate(templateName);
+
+		return replaceColumnsVars(template, fieldName, retClass);
+	}
+
+	private String buildEditCombo(String fieldName, String refList, String refVar) {
+		String template = this.loadTemplate("EditComboTemplate.xhtml");
+
+		return replaceColumnsVars(template, fieldName, Date.class, refList, refVar);
+	}
+
+	public String getVarName() {
+		if (varName == null) {
+			varName = entityClass.getSimpleName().substring(0, 1).toLowerCase()
+					+ entityClass.getSimpleName().substring(1);
+		}
+		return varName;
+	}
+
+	public String getClassName() {
+		return entityClass.getSimpleName();
+	}
+
+	public String getPluralVarName() {
+		if (pluralVarName == null) {
+			pluralVarName = getPluralClassName().substring(0, 1).toLowerCase() + getPluralClassName().substring(1);
+		}
+
+		return pluralVarName;
+	}
+
+	public String getPluralClassName() {
+		if (pluralClassName == null) {
+			pluralClassName = getClassName();
+
+			if (pluralClassName.endsWith("a") || pluralClassName.endsWith("e") || pluralClassName.endsWith("i")
+					|| pluralClassName.endsWith("o") || pluralClassName.endsWith("u")) {
+				pluralClassName += "s";
+			} else {
+				pluralClassName += "es";
+			}
+		}
+		return pluralClassName;
+	}
+
+	public String getListControllerClassName() {
+		return getClassName() + "ListController";
+	}
+
+	public String getListControllerVarName() {
+		return getListControllerClassName().substring(0, 1).toLowerCase() + getListControllerClassName().substring(1);
+	}
+
+	public String getEditControllerClassName() {
+		return getClassName() + "EditController";
+	}
+
+	public String getEditControllerVarName() {
+		return getEditControllerClassName().substring(0, 1).toLowerCase() + getEditControllerClassName().substring(1);
+	}
+
+	public String getRepoClassName() {
+		return getClassName() + "Repo";
+	}
+
+	public String getRepoVarName() {
+		return getRepoClassName().substring(0, 1).toLowerCase() + getRepoClassName().substring(1);
+	}
+
+	public String getServiceClassName() {
+		return getClassName() + "Service";
+	}
+
+	public String getConverterClassName() {
+		return getClassName() + "Converter";
+	}
+
+	public String getServiceVarName() {
+		return getServiceClassName().substring(0, 1).toLowerCase() + getServiceClassName().substring(1);
+	}
+
+	public String getListPageName() {
+		return getPluralClassName() + "List";
+	}
+
+	public String getEditPageName() {
+		return getClassName() + "Edit";
+	}
+
+	public String getBasePackage() {
+		if (basePackage == null) {
+			int pos = entityClass.getName().indexOf(".model");
+			basePackage = entityClass.getName().substring(0, pos);
+		}
+		return basePackage;
+	}
+
+	public String getSubPackage() {
+		if (subPackage == null) {
+			int pos = entityClass.getName().indexOf(".model");
+			subPackage = entityClass.getName().substring(pos + 6,
+					entityClass.getName().length() - (entityClass.getSimpleName().length() + 1));
+		}
+		return subPackage;
+	}
+
+	private String getJavaFileName(String modulo, String className) {
+		String fileName = getProjectSourceFolder().getAbsolutePath() + File.separator + "src" + File.separator + "main"
+				+ File.separator + "java" + File.separator + getBasePackage().replace(".", File.separator)
+				+ File.separator + modulo + getSubPackage().replace(".", File.separator) + File.separator + className
+				+ ".java";
+
+		return fileName.replace(File.separator + "." + File.separator, File.separator);
+	}
+
+	private String getXhtmlFileName(String subFolder, String pageName) {
+
+		String pagePath = getPagePath(subFolder, pageName);
+
+		String fileName = getProjectSourceFolder().getAbsolutePath() + File.separator + "src" + File.separator + "main"
+				+ File.separator + "webapp" + pagePath + ".xhtml";
+
+		String ret = fileName.replace(File.separator + "." + File.separator, File.separator);
+
+		return ret;
+	}
+
+	private String getPagePath(String subFolder, String pageName) {
+		return File.separator + "pages" + File.separator + subFolder.replace(".", File.separator) + File.separator
+				+ pageName;
+	}
 
 }

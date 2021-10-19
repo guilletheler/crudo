@@ -59,7 +59,7 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	}
 	
 	private void setDefaultValues([$[CLASS_NAME]$] [$[VAR_NAME]$]) {
-		
+		[$[CODIGO_DEFAULT]$]
 	}
 
 	public String save() {

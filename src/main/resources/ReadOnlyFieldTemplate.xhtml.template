@@ -1,0 +1,9 @@
+<div [$[DIV_ADMIN_VISIBLE]$]
+	class="ui-g-12 ui-md-6">
+	<div class="ui-sm-12 ui-g-12">
+		<p:outputLabel value="[$[UPPER_FIELD_NAME]$]" />
+	</div>
+	<div class="ui-sm-12 ui-g-12">
+		<p:outputLabel value="#{item.[$[FIELD_VAR_NAME]$]}"[$[F:CONVERTER]$]>
+	</div>
+</div>

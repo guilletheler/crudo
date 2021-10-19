@@ -28,6 +28,12 @@
 			<p:panel styleClass="card box-solid box-primary"
 				class="box box-solid box-primary"
 				header="LISTA DE [$[PLURAL_UPPER_NAME]$]">
+				
+				<p:menubar>
+					<p:menuitem value="Nuevo [$[UPPER_NAME]$]" icon="fa fa-plus"
+						outcome="[$[EDIT_PAGE_NAME]$]">
+					</p:menuitem>
+				</p:menubar>
 
 				<p:dataTable id="datatable"
 					value="#{[$[LIST_CONTROLLER_VAR_NAME]$].lazyDataModel}"
@@ -39,9 +45,6 @@
 					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true"
 					style="width:100%">
 
-					<p:ajax event="rowSelect" update="createButton" />
-					<p:ajax event="rowUnselect" update="createButton" />
-
 					<f:facet name="{Exportar}">
 						<p:outputLabel value="   EXPORTAR: " />
 						<h:commandLink styleClass="tableColumnHeader"
@@ -51,21 +54,7 @@
 						</h:commandLink>
 					</f:facet>
 
-					<f:facet name="header">
-						<div align="left">
-							<div class="row">
-								<div class="col-sm-12 col-md-3">
-									<p:commandButton
-										action="[$[EDIT_PAGE_NAME]$]?faces-redirect=true"
-										icon="fa fa-plus" iconPos="right"
-										styleClass="btn-primary btn-block" id="createButton"
-										value="NUEVO [$[UPPER_NAME]$]" />
-								</div>
-							</div>
-						</div>
-					</f:facet>
-
-					<p:column headerText="Acción" exportable="false" width="6%">
+					<p:column headerText="Acción" exportable="false" width="7%">
 						<p:button title="Editar" class="btn btn-success btn-xs"
 							icon="fa fa-fw fa fa-edit" outcome="[$[EDIT_PAGE_NAME]$].xhtml">
 							<f:param name="id" value="#{item.id}" />
