@@ -63,7 +63,7 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	}
 
 	public String save() {
-		String msg = "[$[CLASS_NAME]$] " + [$[VAR_NAME]$].[$[ID_METHOD]$];
+		String msg = "[$[CLASS_NAME]$] " + ([$[VAR_NAME]$].[$[LABEL_METHOD]$]  == null ? " NUEVO" : [$[VAR_NAME]$].[$[LABEL_METHOD]$].toString());
 		String ret = null;
 		Severity severity = FacesMessage.SEVERITY_INFO;
 		

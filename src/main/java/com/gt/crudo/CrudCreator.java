@@ -360,19 +360,19 @@ public class CrudCreator {
 
 		ret = ret.replace("[$[SUB_PACKAGE]$]", getSubPackage());
 
-		ret = ret.replace("[$[ID_METHOD]$]", getIdMethod());
+		ret = ret.replace("[$[ID_METHOD]$]", getLabelMethod());
 
 		return ret;
 	}
 
-	private String getIdMethod() {
+	private String getLabelMethod() {
 		try {
 			entityClass.getMethod("getNombre");
 			return "getNombre()";
 		} catch (NoSuchMethodException | SecurityException e) {
 
 		}
-		return "getId() == null ? \" NUEVO\" : " + varName + ".getId().toString()";
+		return "getId()";
 	}
 
 	private String replaceColumnsVars(String columnTemplate, String fieldName, Class<?> clazz) {

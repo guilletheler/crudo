@@ -49,7 +49,7 @@ public class [$[LIST_CONTROLLER_CLASS_NAME]$] implements Serializable {
 
 	public void borrar[$[CLASS_NAME]$]([$[CLASS_NAME]$] [$[VAR_NAME]$]) {
 		[$[REPO_VAR_NAME]$].delete([$[VAR_NAME]$]);
-		addDetailMessage("[$[CLASS_NAME]$] " + [$[VAR_NAME]$].[$[ID_METHOD]$] + " borrado exitosamente");
+		addDetailMessage("[$[CLASS_NAME]$] " + [$[VAR_NAME]$].[$[LABEL_METHOD]$] + " borrado exitosamente");
 	}
 	
 	public SortMeta getDefaultSortBy() {

@@ -8,12 +8,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
 
-public interface [$[REPO_CLASS_NAME]$] extends CrudRepository<[$[CLASS_NAME]$], Integer>, PagingAndSortingRepository<[$[CLASS_NAME]$], Integer>,
+public interface [$[REPO_CLASS_NAME]$] extends PagingAndSortingRepository<[$[CLASS_NAME]$], Integer>,
 		JpaSpecificationExecutor<[$[CLASS_NAME]$]> {
 
 	[$[CODIGO_QUERY]$]
