@@ -360,7 +360,7 @@ public class CrudCreator {
 
 		ret = ret.replace("[$[SUB_PACKAGE]$]", getSubPackage());
 
-		ret = ret.replace("[$[ID_METHOD]$]", getLabelMethod());
+		ret = ret.replace("[$[LABEL_METHOD]$]", getLabelMethod());
 
 		return ret;
 	}
