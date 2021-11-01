@@ -20,7 +20,7 @@ public class CrudoFileWriter {
 		crudCreator.generateEnumsMB(System.out);
 	}
 
-	private static void writeRepo(CrudCreator crudCreator, boolean replace) {
+	public static void writeRepo(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
 
 			@Override
@@ -35,7 +35,7 @@ public class CrudoFileWriter {
 		}, replace);
 	}
 
-	private static void writeService(CrudCreator crudCreator, boolean replace) {
+	public static void writeService(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
 
 			@Override
@@ -50,7 +50,7 @@ public class CrudoFileWriter {
 		}, replace);
 	}
 
-	private static void writeConverter(CrudCreator crudCreator, boolean replace) {
+	public static void writeConverter(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
 
 			@Override

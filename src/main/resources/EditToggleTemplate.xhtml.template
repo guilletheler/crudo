@@ -1,4 +1,4 @@
-<div class="ui-g-12 ui-md-6">
+<div class="ui-g-12 ui-md-3">
 	<div class="ui-sm-12 ui-g-12">
 		<p:outputLabel for="[$[FIELD_VAR_NAME]$]" value="[$[UPPER_FIELD_NAME]$]" />
 	</div>

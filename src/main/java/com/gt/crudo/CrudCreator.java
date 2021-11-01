@@ -547,6 +547,8 @@ public class CrudCreator {
 		case "Integer":
 		case "long":
 		case "Long":
+		case "short":
+		case "Short":
 			return buildEdit("EditNumberTemplate.xhtml", fieldName, Integer.class);
 		case "float":
 		case "Float":

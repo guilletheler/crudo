@@ -54,7 +54,7 @@
 						</h:commandLink>
 					</f:facet>
 
-					<p:column headerText="Acción" exportable="false" width="7%">
+					<p:column headerText="Acción" exportable="false" style="width: 80px">
 						<p:button title="Editar" class="btn btn-success btn-xs"
 							icon="fa fa-fw fa fa-edit" outcome="[$[EDIT_PAGE_NAME]$].xhtml">
 							<f:param name="id" value="#{item.id}" />
