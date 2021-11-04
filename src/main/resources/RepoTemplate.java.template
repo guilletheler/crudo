@@ -9,9 +9,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
 
+@Repository
 public interface [$[REPO_CLASS_NAME]$] extends PagingAndSortingRepository<[$[CLASS_NAME]$], Integer>,
 		JpaSpecificationExecutor<[$[CLASS_NAME]$]> {
 
