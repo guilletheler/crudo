@@ -91,3 +91,5 @@
 **/documentacion/modeliows/picker/project.conf
 
 **/.vscode
+.fake
+.ionide

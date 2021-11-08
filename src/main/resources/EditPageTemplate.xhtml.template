@@ -42,7 +42,10 @@
 					value="Guardar" update="@form" styleClass="btn btn-success" />
 				<p:commandButton value="Volver"
 					action="[$[LIST_PAGE_NAME]$]?faces-redirect=true"
-					styleClass="btn btn-danger" process="@this" immediate="true" />
+					styleClass="btn btn-danger" process="@this" immediate="true" >
+					<p:confirm header="Descartar cambios" message="¿Está seguro de descartar los cambios?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
 
 			</p:panel>
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
