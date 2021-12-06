@@ -45,7 +45,7 @@
 					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true"
 					style="width:100%">
 
-					<f:facet name="{Exportar}">
+					<p:ajax event="filter" global="false" /><f:facet name="{Exportar}">
 						<p:outputLabel value="   EXPORTAR: " />
 						<h:commandLink styleClass="tableColumnHeader"
 							title="Exportar a XLS">

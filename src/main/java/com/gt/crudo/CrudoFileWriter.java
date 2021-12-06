@@ -65,7 +65,7 @@ public class CrudoFileWriter {
 		}, replace);
 	}
 
-	private static void writeListController(CrudCreator crudCreator, boolean replace) {
+	public static void writeListController(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
 
 			@Override
@@ -80,7 +80,7 @@ public class CrudoFileWriter {
 		}, replace);
 	}
 
-	private static void writeEditController(CrudCreator crudCreator, boolean replace) {
+	public static void writeEditController(CrudCreator crudCreator, boolean replace) {
 		writeFile(new CrudoGenerator() {
 
 			@Override
@@ -95,7 +95,7 @@ public class CrudoFileWriter {
 		}, replace);
 	}
 
-	private static void writeListPage(CrudCreator crudCreator, String subFolder, boolean replace) {
+	public static void writeListPage(CrudCreator crudCreator, String subFolder, boolean replace) {
 		writeFile(new CrudoGenerator() {
 
 			@Override
@@ -110,7 +110,7 @@ public class CrudoFileWriter {
 		}, replace);
 	}
 
-	private static void writeEditPage(CrudCreator crudCreator, String subFolder, boolean replace) {
+	public static void writeEditPage(CrudCreator crudCreator, String subFolder, boolean replace) {
 		writeFile(new CrudoGenerator() {
 
 			@Override
@@ -125,7 +125,7 @@ public class CrudoFileWriter {
 		}, replace);
 	}
 
-	static void writeFile(CrudoGenerator csw, boolean replace) {
+	public static void writeFile(CrudoGenerator csw, boolean replace) {
 
 		File file = new File(csw.getFileName());
 
