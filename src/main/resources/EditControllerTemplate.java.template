@@ -63,18 +63,13 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	}
 
 	public String save() {
-		String msg = "[$[CLASS_NAME]$] " + ([$[VAR_NAME]$].[$[LABEL_METHOD]$]  == null ? " NUEVO" : [$[VAR_NAME]$].[$[LABEL_METHOD]$].toString());
+		String msg = "[$[CLASS_NAME]$] " + ([$[VAR_NAME]$].[$[LABEL_METHOD]$]  == null ? " creado exitosamente" : ([$[VAR_NAME]$].[$[LABEL_METHOD]$].toString() + " editado exitosamente"));
 		String ret = null;
 		Severity severity = FacesMessage.SEVERITY_INFO;
 		
 		try {
 			[$[SERVICE_VAR_NAME]$].save([$[VAR_NAME]$]);
-	
-			if ([$[VAR_NAME]$].getId() == null) {
-				msg += " creado exitosamente";
-			} else {
-				msg += " editado exitosamente";
-			}
+				
 			ret = "[$[LIST_PAGE_NAME]$]?faces-redirect=true";
 		} catch (ValidationException vex) {
 			msg = "Error:\n" + vex.getMessage();

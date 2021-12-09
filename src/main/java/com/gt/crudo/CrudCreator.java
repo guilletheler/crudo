@@ -187,6 +187,10 @@ public class CrudCreator {
 	public String getListPageFileName(String subFolder) {
 		return getXhtmlFileName(subFolder, getListPageName());
 	}
+	
+	public String getEditableListPageFileName(String subFolder) {
+		return getXhtmlFileName(subFolder, getEditableListPageName());
+	}
 
 	public void generateListPage(PrintStream print) {
 
@@ -213,6 +217,50 @@ public class CrudCreator {
 		}
 
 		template = template.replace("[$[DATATABLE_COLUMNS]$]", allColumns.toString());
+
+		print.println(replaceVars(template));
+	}
+	
+	public void generateEditableListPage(PrintStream print) {
+
+		String template = this.loadTemplate("EditableListPageTemplate.xhtml");
+
+		if (template == null) {
+			return;
+		}
+
+		String columnTemplate = this.loadTemplate("EditableDatatableColumnTemplate.xhtml");
+
+		StringBuilder allColumns = new StringBuilder();
+
+		for (Method m : entityClass.getMethods()) {
+			if (notListableMethod(m)) {
+				continue;
+			}
+			if (allColumns.length() > 0) {
+				allColumns.append("\n");
+			}
+			String fieldName = getEditableFieldName(m);
+						
+			String editableColumn = replaceColumnsVars(columnTemplate,
+					fieldName, m.getReturnType());
+
+			String tmp = "";
+			
+			for(String s : buildEditField("item." + fieldName, m.getReturnType()).split("\n")) {
+				if(s.trim().startsWith("<div") ||
+						s.trim().startsWith("</div") ||
+						s.trim().startsWith("<p:outputLabel") ||
+						s.trim().startsWith("<p:tooltip")) {
+					continue;
+				}
+				tmp += s + "\n";
+			}
+			editableColumn = editableColumn.replace("[$[EDIT_FIELD]$]", tmp);
+			allColumns.append(editableColumn);
+		}
+		
+		template = template.replace("[$[DATATABLE_EDITABLE_COLUMNS]$]", allColumns.toString());
 
 		print.println(replaceVars(template));
 	}
@@ -664,6 +712,10 @@ public class CrudCreator {
 
 	public String getListPageName() {
 		return getPluralClassName() + "List";
+	}
+	
+	public String getEditableListPageName() {
+		return getPluralClassName() + "TableEdit";
 	}
 
 	public String getEditPageName() {

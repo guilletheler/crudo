@@ -9,12 +9,19 @@ import java.util.logging.Logger;
 public class CrudoFileWriter {
 
 	public static void writeAll(CrudCreator crudCreator, String pagesSubFolder, boolean replace) {
+		writeAll(crudCreator, pagesSubFolder, replace, false);
+	}
+
+	public static void writeAll(CrudCreator crudCreator, String pagesSubFolder, boolean replace, boolean tableEditor) {
 		writeRepo(crudCreator, replace);
 		writeService(crudCreator, replace);
 		writeConverter(crudCreator, replace);
 		writeListController(crudCreator, replace);
 		writeEditController(crudCreator, replace);
 		writeListPage(crudCreator, pagesSubFolder, replace);
+		if (tableEditor) {
+			writeEditListPage(crudCreator, pagesSubFolder, replace);
+		}
 		writeEditPage(crudCreator, pagesSubFolder, replace);
 		crudCreator.generateMenuDefinition(System.out, pagesSubFolder);
 		crudCreator.generateEnumsMB(System.out);
@@ -106,6 +113,21 @@ public class CrudoFileWriter {
 			@Override
 			public String getFileName() {
 				return crudCreator.getListPageFileName(subFolder);
+			}
+		}, replace);
+	}
+
+	public static void writeEditListPage(CrudCreator crudCreator, String subFolder, boolean replace) {
+		writeFile(new CrudoGenerator() {
+
+			@Override
+			public void write(PrintStream printStream) {
+				crudCreator.generateEditableListPage(printStream);
+			}
+
+			@Override
+			public String getFileName() {
+				return crudCreator.getEditableListPageFileName(subFolder);
 			}
 		}, replace);
 	}

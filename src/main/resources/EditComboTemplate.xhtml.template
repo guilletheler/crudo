@@ -1,7 +1,6 @@
 <div class="ui-g-12 ui-md-4">
 	<div class="ui-sm-12 ui-g-12">
-		<p:outputLabel for="[$[FIELD_VAR_NAME]$]"
-			value="[$[UPPER_FIELD_NAME]$]" />
+		<p:outputLabel for="[$[FIELD_VAR_NAME]$]" value="[$[UPPER_FIELD_NAME]$]" />
 	</div>
 	<div class="ui-sm-12 ui-g-12">
 		<p:selectOneMenu id="[$[FIELD_VAR_NAME]$]"
@@ -12,7 +11,6 @@
 			<f:selectItems value="#{[$[REF_LIST]$]}" var="item"
 				itemLabel="#{item.[$[REF_VAR]$]}" itemValue="#{item}" />
 		</p:selectOneMenu>
-		<p:tooltip for="[$[FIELD_VAR_NAME]$]"
-			value="Valor de [$[FIELD_VAR_NAME]$]" position="top" />
+		<p:tooltip for="[$[FIELD_VAR_NAME]$]" value="Valor de [$[FIELD_VAR_NAME]$]" position="top" />
 	</div>
 </div>

@@ -1,0 +1,12 @@
+<p:column [$[ID_ADMIN_VISIBLE]$] headerText="[$[UPPER_FIELD_NAME]$]" style="width: 150px"
+	sortBy="#{item.[$[FIELD_VAR_NAME]$]}"
+	filterBy="#{item.[$[FIELD_VAR_NAME]$]}" filterMatchMode="contains">
+	<p:cellEditor>
+	<f:facet name="output">
+		<p:outputLabel value="#{item.[$[FIELD_VAR_NAME]$]}"[$[F:CONVERTER]$]>
+	</f:facet>
+	<f:facet name="input">
+		[$[EDIT_FIELD]$]
+	</f:facet>
+</p:cellEditor>
+</p:column>
