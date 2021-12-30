@@ -49,7 +49,7 @@ public class [$[EDIT_CONTROLLER_CLASS_NAME]$] implements Serializable {
 			return;
 		}
 		if (has(id)) {
-			[$[VAR_NAME]$] = [$[SERVICE_VAR_NAME]$].getRepo().findById(id).orElse(new [$[CLASS_NAME]$]());
+			[$[VAR_NAME]$] = [$[SERVICE_VAR_NAME]$].getRepo().findById(id).orElseGet(() ->new [$[CLASS_NAME]$]());
 		} else {
 			[$[VAR_NAME]$] = new [$[CLASS_NAME]$]();
 		}

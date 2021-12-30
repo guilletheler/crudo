@@ -35,7 +35,7 @@ public class [$[SERVICE_CLASS_NAME]$] implements SelectableLazyDMFiller<[$[CLASS
 			return null;
 		}
 
-		return repo.findById((Integer) id).orElse(null);
+		return repo.findById((Integer) id).orElseGet(() ->null);
 	}
 	
 	public void save([$[CLASS_NAME]$] [$[VAR_NAME]$]) {
