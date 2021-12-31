@@ -4,7 +4,7 @@
  */
 package [$[BASE_PACKAGE]$].controller[$[SUB_PACKAGE]$];
 
-import static [$[BASE_PACKAGE]$].util.Utils.addDetailMessage;
+import static com.gt.toolbox.spb.webapps.commons.infra.utils.Utils.addDetailMessage;
 
 import java.io.Serializable;
 
@@ -16,8 +16,8 @@ import javax.inject.Named;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.LazyDataModel;
+import com.gt.toolbox.spb.webapps.commons.infra.datamodel.EntityLazyDataModel;
 
-import [$[BASE_PACKAGE]$].infra.model.EntityLazyDataModel;
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].service[$[SUB_PACKAGE]$].[$[SERVICE_CLASS_NAME]$];

@@ -4,7 +4,7 @@
  */
 package [$[BASE_PACKAGE]$].controller[$[SUB_PACKAGE]$];
 
-import static [$[BASE_PACKAGE]$].util.Utils.addDetailMessage;
+import static com.gt.toolbox.spb.webapps.commons.infra.utils.Utils.addDetailMessage;
 import static com.github.adminfaces.template.util.Assert.has;
 
 import java.io.Serializable;
