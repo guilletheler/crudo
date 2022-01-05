@@ -34,9 +34,6 @@ public class [$[LIST_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	[$[REPO_CLASS_NAME]$] [$[REPO_VAR_NAME]$];
-	
-	@Inject
 	[$[SERVICE_CLASS_NAME]$] [$[SERVICE_VAR_NAME]$];
 
 	@Getter
@@ -48,7 +45,7 @@ public class [$[LIST_CONTROLLER_CLASS_NAME]$] implements Serializable {
 	}
 
 	public void borrar[$[CLASS_NAME]$]([$[CLASS_NAME]$] [$[VAR_NAME]$]) {
-		[$[REPO_VAR_NAME]$].delete([$[VAR_NAME]$]);
+		[$[SERVICE_VAR_NAME]$].getRepo().delete([$[VAR_NAME]$]);
 		addDetailMessage("[$[CLASS_NAME]$] " + [$[VAR_NAME]$].[$[LABEL_METHOD]$] + " borrado exitosamente");
 	}
 	
