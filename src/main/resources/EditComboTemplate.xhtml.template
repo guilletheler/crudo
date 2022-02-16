@@ -6,7 +6,7 @@
 		<p:selectOneMenu id="[$[FIELD_VAR_NAME]$]"
 			value="#{[$[EDIT_CONTROLLER_VAR_NAME]$].[$[VAR_NAME]$].[$[FIELD_VAR_NAME]$]}"
 			style="width:100%" filter="true" filterMatchMode="contains"
-			converter="entityConverter" styleClass="selectOneMenu">
+			styleClass="selectOneMenu">
 			<f:selectItem itemLabel="Seleccione una opcion" itemValue="#{null}" />
 			<f:selectItems value="#{[$[REF_LIST]$]}" var="item"
 				itemLabel="#{item.[$[REF_VAR]$]}" itemValue="#{item}" />

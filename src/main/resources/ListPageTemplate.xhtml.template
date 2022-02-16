@@ -50,18 +50,21 @@
 						<h:commandLink styleClass="tableColumnHeader"
 							title="Exportar a XLS">
 							<i class="fa fa-fw fa-file-excel-o" />
-							<p:dataExporter type="xlsx" target="datatable" fileName="Lista" />
+							<p:dataExporter type="xlsx" 
+											target="datatable" 
+											postProcessor="#{tableExporterUtilsComponent.acomodaXls}"
+											fileName="Lista[$[PLURAL_CLASS_NAME]$]" />
 						</h:commandLink>
 					</f:facet>
 
 					<p:column headerText="Acción" exportable="false" style="width: 80px">
-						<p:button title="Editar" class="btn btn-success btn-xs"
+						<p:button title="Editar" class="btn btn-success btn-xs" style="width: 48%"
 							icon="fa fa-fw fa fa-edit" outcome="[$[EDIT_PAGE_NAME]$].xhtml">
 							<f:param name="id" value="#{item.id}" />
 						</p:button>
 						<p:commandButton
 							actionListener="#{[$[LIST_CONTROLLER_VAR_NAME]$].borrar[$[CLASS_NAME]$](item)}"
-							update="datatable" class="btn btn-danger btn-xs"
+							update="datatable" class="btn btn-danger btn-xs" style="width: 48%"
 							icon="fa fa-fw fa fa-trash-o" title="Eliminar">
 							<p:confirm header="Eliminar [$[CLASS_NAME]$]"
 								message="¿Está seguro de eliminar la entidad?"

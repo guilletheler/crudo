@@ -19,7 +19,6 @@ import org.primefaces.model.LazyDataModel;
 import com.gt.toolbox.spb.webapps.commons.infra.datamodel.EntityLazyDataModel;
 
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
-import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].service[$[SUB_PACKAGE]$].[$[SERVICE_CLASS_NAME]$];
 
 import lombok.Getter;

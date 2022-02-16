@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.gt.toolbox.spb.webapps.commons.infra.datamodel.SelectableLazyDMFiller;
 import [$[BASE_PACKAGE]$].model[$[SUB_PACKAGE]$].[$[CLASS_NAME]$];
 import [$[BASE_PACKAGE]$].repo[$[SUB_PACKAGE]$].[$[REPO_CLASS_NAME]$];
-import [$[BASE_PACKAGE]$].service.QueryHelper;
+import com.gt.toolbox.spb.webapps.commons.infra.service.QueryHelper;
 
 import lombok.Getter;
 

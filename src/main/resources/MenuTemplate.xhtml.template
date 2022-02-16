@@ -1,5 +1,5 @@
 <!-- MENU -->
-<ui:fragment rendered="#{sessionMB.inRole('[$[ROLE_REQUIRED]$]')}">  
+<ui:fragment rendered="#{usuarioService.inRole('[$[ROLE_REQUIRED]$]')}">  
 	<li class="treeview"><a href="#"><i class="fa fa-database"></i>
 			<span>[$[MENU_NAME]$]</span> <i class="fa fa-angle-left pull-right"></i>
 	</a>
@@ -13,7 +13,7 @@
 <!-- FIN MENU -->
 
 <!-- MENUBAR-->
-<ui:fragment rendered="#{sessionMB.inRole('[$[ROLE_REQUIRED]$]')}">  
+<ui:fragment rendered="#{usuarioService.inRole('[$[ROLE_REQUIRED]$]')}">  
 	<li class="dropdown"><a href="#" class="dropdown-toggle"
 		data-toggle="dropdown">[$[MENU_NAME]$] <span class="caret"></span> <i
 			class="fa fa-gears"></i>

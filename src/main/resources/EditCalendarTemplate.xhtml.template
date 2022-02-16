@@ -4,11 +4,11 @@
 			value="[$[UPPER_FIELD_NAME]$]" />
 	</div>
 	<div class="ui-sm-12 ui-g-12">
-		<p:calendar id="[$[FIELD_VAR_NAME]$]"
+		<p:datePicker id="[$[FIELD_VAR_NAME]$]"
 			value="#{[$[EDIT_CONTROLLER_VAR_NAME]$].[$[VAR_NAME]$].[$[FIELD_VAR_NAME]$]}"
 			locale="es"
 			navigator="true" pattern="dd/MM/yyyy" showOn="button">
-		</p:calendar>
+		</p:datePicker>
 
 		<p:tooltip for="[$[FIELD_VAR_NAME]$]"
 			value="Valor de [$[FIELD_VAR_NAME]$]" position="top" />

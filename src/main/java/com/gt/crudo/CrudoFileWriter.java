@@ -24,7 +24,7 @@ public class CrudoFileWriter {
 		}
 		writeEditPage(crudCreator, pagesSubFolder, replace);
 		crudCreator.generateMenuDefinition(System.out, pagesSubFolder);
-		crudCreator.generateEnumsMB(System.out);
+		crudCreator.generateenumsComponent(System.out);
 	}
 
 	public static void writeRepo(CrudCreator crudCreator, boolean replace) {

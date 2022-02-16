@@ -277,7 +277,7 @@ public class CrudCreator {
 		print.println(ret);
 	}
 
-	public void generateEnumsMB(PrintStream print) {
+	public void generateenumsComponent(PrintStream print) {
 		print.println();
 		print.println();
 		print.println("Agregar a EnumMB");
@@ -438,8 +438,8 @@ public class CrudCreator {
 		ret = ret.replace("[$[REF_VAR]$]", refVar);
 
 		if (fieldName.equalsIgnoreCase("id")) {
-			ret = ret.replace("[$[ID_ADMIN_VISIBLE]$]", "visible=\"#{sessionMB.inRole('SYSADMIN')}\"");
-			ret = ret.replace("[$[DIV_ADMIN_VISIBLE]$]", "style=\"#{(sessionMB.inRole('SYSADMIN'))?'':'display:none'}\"");
+			ret = ret.replace("[$[ID_ADMIN_VISIBLE]$]", "visible=\"#{usuarioService.inRole('SYSADMIN')}\"");
+			ret = ret.replace("[$[DIV_ADMIN_VISIBLE]$]", "style=\"#{(usuarioService.inRole('SYSADMIN'))?'':'display:none'}\"");
 		} else {
 			ret = ret.replace("[$[ID_ADMIN_VISIBLE]$]", "");
 			ret = ret.replace("[$[DIV_ADMIN_VISIBLE]$]", "");
@@ -618,7 +618,7 @@ public class CrudCreator {
 				enumDescription = "descripcion";
 			} catch (NoSuchMethodException | SecurityException e) {
 			}
-			return buildEditCombo(fieldName, "enumsMB." + returnType.getSimpleName().substring(0, 1).toLowerCase()
+			return buildEditCombo(fieldName, "enumsComponent." + returnType.getSimpleName().substring(0, 1).toLowerCase()
 					+ returnType.getSimpleName().substring(1), enumDescription);
 		}
 
